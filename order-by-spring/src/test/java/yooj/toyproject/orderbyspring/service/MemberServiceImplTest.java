@@ -8,6 +8,7 @@ import yooj.toyproject.orderbyspring.domain.Address;
 import yooj.toyproject.orderbyspring.domain.Member;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Inheritance;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,7 +22,7 @@ class MemberServiceImplTest {
     EntityManager em;
 
     @Test
-    void 회원가입() throws Exception {
+    void 회원가입및조회() throws Exception {
         //given
         Address address = new Address("seoul", "gwan", "12340");
         Member member1 = new Member("y", "member1", "member1!", address);
