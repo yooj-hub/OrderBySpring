@@ -25,4 +25,7 @@ public abstract class Item extends BaseEntity {
         this.price = price;
         this.stockQuantity = stockQuantity;
     }
+    public void changeStockQuantity(int quantity){
+        this.stockQuantity-=quantity;
+    }
 }

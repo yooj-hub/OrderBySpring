@@ -32,11 +32,12 @@ public class OrderItem {
     @JoinColumn(name = "item_id")
     private Item item;
 
-    public OrderItem(int totalPrice, Order order, int orderPrice, int quantity, Item item) {
-        this.totalPrice = totalPrice;
+    public OrderItem(Order order, int orderPrice, int quantity, Item item) {
+        this.totalPrice = orderPrice* quantity;
         this.order = order;
-        this.orderPrice = orderPrice;
         this.quantity = quantity;
         this.item = item;
+        this.orderPrice = orderPrice;
+        item.changeStockQuantity(quantity);
     }
 }
