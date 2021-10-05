@@ -1,11 +1,7 @@
-package yooj.toyproject.orderbyspring.service;
+package yooj.toyproject.orderbyspring.repository;
 
 import yooj.toyproject.orderbyspring.web.MemberResponseDto;
 
-public interface LoginService {
-
+public interface MemberRepositoryCustom {
     MemberResponseDto login(String loginId, String password);
-
-
-
 }

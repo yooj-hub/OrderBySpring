@@ -6,7 +6,7 @@ import yooj.toyproject.orderbyspring.domain.Member;
 
 import java.util.Optional;
 
-public interface MemberRepository extends JpaRepository<Member, Long> {
+public interface MemberRepository extends JpaRepository<Member, Long>, MemberRepositoryCustom {
     @Query("select m from Member m where m.loginId = :loginId")
     Optional<Member> findByLoginId(String loginId);
 }

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import yooj.toyproject.orderbyspring.domain.Member;
 import yooj.toyproject.orderbyspring.service.LoginService;
+import yooj.toyproject.orderbyspring.web.MemberResponseDto;
 import yooj.toyproject.orderbyspring.web.SessionConst;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +22,7 @@ public class LoginController {
         if(loginId==null || password==null){
             return "공백일 수 없습니다.";
         }
-        Member loginMember = loginService.login(loginId, password);
+        MemberResponseDto loginMember = loginService.login(loginId, password);
         if(loginMember==null){
             return "아이디 또는 비밀번호가 맞지 않습니다.";
         }
