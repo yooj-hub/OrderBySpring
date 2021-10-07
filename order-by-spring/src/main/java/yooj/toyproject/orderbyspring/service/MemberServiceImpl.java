@@ -9,6 +9,7 @@ import yooj.toyproject.orderbyspring.domain.Member;
 import yooj.toyproject.orderbyspring.repository.MemberRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -32,6 +33,11 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public String findByIdPassword(Long id) {
+        return memberRepository.findByIdPassword(id);
+    }
+
+    @Override
     public List<Member> findAll() {
         return memberRepository.findAll();
     }
@@ -40,5 +46,17 @@ public class MemberServiceImpl implements MemberService {
     public void deleteMember(Member member) {
         memberRepository.delete(member);
     }
+
+    @Override
+    public Optional<Member> findByLoginId(String loginId) {
+        return memberRepository.findByLoginId(loginId);
+    }
+
+    @Override
+    @Transactional
+    public void changeMember(Long id, String username,  String password, String city, String street, String zipcode) {
+        findById(id).changeMember(username,  password, city, street, zipcode);
+    }
+
 
 }

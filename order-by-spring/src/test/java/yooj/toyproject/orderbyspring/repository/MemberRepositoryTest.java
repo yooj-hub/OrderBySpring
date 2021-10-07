@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import yooj.toyproject.orderbyspring.domain.Address;
 import yooj.toyproject.orderbyspring.domain.Member;
-import yooj.toyproject.orderbyspring.web.MemberResponseDto;
+import yooj.toyproject.orderbyspring.web.LoginMemberDto;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -22,7 +22,7 @@ class MemberRepositoryTest {
         memberRepository.save(member1);
 
         //when
-        MemberResponseDto loginMember = memberRepository.login("member1", "member1!");
+        LoginMemberDto loginMember = memberRepository.login("member1", "member1!");
         Address loginMemberAddress = loginMember.getAddress();
 
 

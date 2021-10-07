@@ -48,7 +48,7 @@ class MemberServiceImplTest {
 
         //when
         Member saveMember = memberService.save(member1);
-        member1.changeMember("m", "member2", "member2!", address.getCity(), address.getStreet(), address.getZipcode());
+        member1.changeMember("m",  "member2!", address.getCity(), address.getStreet(), address.getZipcode());
         em.flush();
         em.clear();
         Member findMember = memberService.findById(saveMember.getId());
@@ -56,7 +56,6 @@ class MemberServiceImplTest {
 
         //then
         assertThat(findMember.getUsername()).isEqualTo("m");
-        assertThat(findMember.getLoginId()).isEqualTo("member2");
         assertThat(findMember.getPassword()).isEqualTo("member2!");
     }
 

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 가입</title>
+    <div th:replace="/layout/header :: header"></div>
+</head>
+<style>
+    .field-error {
+        border-color: red;
+        color: red;
+    }
+
+    .box {
+        margin-top: 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /*float: contour;*/
+    }
+
+    .form-background {
+        background-color: #e7e7e7;
+        padding: 20px;
+        border-radius: 10%;
+    }
+
+    .sub-btn {
+        margin-top: 1rem;
+        display: flex;
+        float: right;
+    }
+    .form-group{
+        margin-top: 1rem;
+    }
+    input{
+        display: flex;
+        float: right;
+    }
+</style>
+<body>
+<div class="box">
+    <div class="form-background">
+        <form action="#" th:action th:object="${form}" method="post">
+            <div th:if="${#fields.hasGlobalErrors()}">
+                <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+            </div>
+            <div class="form-group">
+                <div class="field-error" th:errors="*{username}"></div>
+                <label for="loginId">Username</label>
+                <input type="text" id="username" th:field="*{username}" th:errorclass="field-error"
+                       placeholder="Enter Username">
+
+            </div>
+            <div class="form-group">
+                <div class="field-error" th:errors="*{loginId}"></div>
+                <label for="loginId">Login Id</label>
+                <input type="text" id="loginId" th:field="*{loginId}" th:errorclass="field-error"
+                       placeholder="Enter loginId">
+
+            </div>
+            <div class="form-group">
+                <div class="field-error" th:errors="*{password}"></div>
+                <label for="password">Password</label>
+                <input type="password" id="password" th:field="*{password}" th:errorclass="field-error"
+                       placeholder="Enter Password">
+            </div>
+            <div class="form-group">
+                <div class="field-errr" th:errors="*{city}"></div>
+                <label for="loginId">City</label>
+                <input type="text" id="city" th:field="*{city}" th:errorclass="field-error"
+                       placeholder="Enter City">
+
+            </div>
+            <div class="form-group">
+                <div class="field-error" th:errors="*{street}"></div>
+                <label for="loginId">Street</label>
+                <input type="text" id="street" th:field="*{street}" th:errorclass="field-error"
+                       placeholder="Enter Street">
+
+            </div>
+            <div class="form-group">
+                <div class="field-error" th:errors="*{zipcode}"></div>
+                <label for="loginId">Zipcode</label>
+                <input type="text" id="zipcode" th:field="*{zipcode}" th:errorclass="field-error"
+                       placeholder="Enter Zipcode">
+
+            </div>
+
+            <button type="submit" class="btn btn-primary sub-btn">Submit</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+
+</html>

@@ -1,10 +1,7 @@
 package yooj.toyproject.orderbyspring.domain;
 
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import yooj.toyproject.orderbyspring.BaseEntity;
 
 import javax.persistence.*;
@@ -13,6 +10,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "member", uniqueConstraints = {@UniqueConstraint(name = "login_id_unique", columnNames = "loginId")})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+//@NoArgsConstructor
 @ToString
 public class Member extends BaseEntity {
     @Id
@@ -25,6 +23,7 @@ public class Member extends BaseEntity {
     @Embedded
     private Address address;
 
+    @Builder
     public Member(String username, String loginId, String password, Address address) {
         this.username = username;
         this.loginId = loginId;
@@ -32,10 +31,9 @@ public class Member extends BaseEntity {
         this.address = address;
     }
 
-    public void changeMember(String username, String loginId, String password, String city, String street, String zipcode) {
+    public void changeMember(String username, String password, String city, String street, String zipcode) {
         this.address = new Address(city, street, zipcode);
         this.username = username;
-        this.loginId = loginId;
         this.password = password;
     }
 }

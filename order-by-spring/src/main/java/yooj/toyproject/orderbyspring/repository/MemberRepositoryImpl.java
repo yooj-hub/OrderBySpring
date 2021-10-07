@@ -1,11 +1,9 @@
 package yooj.toyproject.orderbyspring.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-import yooj.toyproject.orderbyspring.domain.QMember;
-import yooj.toyproject.orderbyspring.web.MemberResponseDto;
-import yooj.toyproject.orderbyspring.web.QMemberResponseDto;
+import yooj.toyproject.orderbyspring.web.LoginMemberDto;
+import yooj.toyproject.orderbyspring.web.QLoginMemberDto;
+
 
 import javax.persistence.EntityManager;
 
@@ -19,9 +17,9 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
     public MemberRepositoryImpl(EntityManager em) {
         this.jpaQueryFactory = new JPAQueryFactory(em);
     }
-    public MemberResponseDto login(String loginId, String password) {
+    public LoginMemberDto login(String loginId, String password) {
         return Optional.ofNullable(jpaQueryFactory
-                .select(new QMemberResponseDto(
+                .select(new QLoginMemberDto(
                         member.id,
                         member.username,
                         member.loginId,
@@ -30,6 +28,15 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
                 .where(member.loginId.eq(loginId).and(member.password.eq(password))
                 ).fetchOne()).orElse(null);
 //                .orElseThrow(()-> new IllegalArgumentException("아이디와 비밀번호를 확인해 주세요."));
+    }
+
+    @Override
+    public String findByIdPassword(Long id) {
+        return jpaQueryFactory
+                .select(member.password)
+                .from(member)
+                .where(member.id.eq(id))
+                .fetchOne();
     }
 
 }

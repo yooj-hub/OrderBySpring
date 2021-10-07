@@ -3,22 +3,18 @@ package yooj.toyproject.orderbyspring.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import yooj.toyproject.orderbyspring.domain.Member;
-import yooj.toyproject.orderbyspring.web.MemberResponseDto;
-import yooj.toyproject.orderbyspring.web.SessionConst;
-import yooj.toyproject.orderbyspring.web.login.LoginForm;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import yooj.toyproject.orderbyspring.web.LoginMemberDto;
+import yooj.toyproject.orderbyspring.web.argumentresolver.Login;
 
 @Controller
 //@RestController
 public class HomeController {
     @GetMapping("/")
-    public String home(){
-        return "home";
+    public String home(@Login LoginMemberDto loginMember, Model model){
+        if(loginMember==null){
+            return "home";
+        }
+        model.addAttribute("loginMember", loginMember);
+        return "loginHome";
     }
-
-
-
 }
