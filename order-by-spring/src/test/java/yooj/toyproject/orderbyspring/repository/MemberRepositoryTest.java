@@ -1,6 +1,5 @@
 package yooj.toyproject.orderbyspring.repository;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,7 +8,6 @@ import yooj.toyproject.orderbyspring.domain.Member;
 import yooj.toyproject.orderbyspring.web.MemberResponseDto;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class MemberRepositoryTest {
@@ -30,7 +28,7 @@ class MemberRepositoryTest {
 
         //then
         // 정상 로그인 테스트
-        assertThat(loginMember.getLogindId()).isEqualTo("member1");
+        assertThat(loginMember.getLoginId()).isEqualTo("member1");
         assertThat(loginMember.getId()).isEqualTo(member1.getId());
         assertThat(loginMemberAddress.getCity()).isEqualTo(address.getCity());
         assertThat(loginMemberAddress.getZipcode()).isEqualTo(address.getZipcode());

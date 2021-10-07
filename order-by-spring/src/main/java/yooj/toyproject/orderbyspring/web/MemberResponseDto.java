@@ -1,7 +1,6 @@
 package yooj.toyproject.orderbyspring.web;
 
 import com.querydsl.core.annotations.QueryProjection;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import yooj.toyproject.orderbyspring.domain.Address;
 import yooj.toyproject.orderbyspring.domain.Member;
@@ -12,21 +11,21 @@ public class MemberResponseDto {
 
     private Long id;
     private String username;
-    private String logindId;
+    private String loginId;
     private Address address;
 
     public MemberResponseDto(Member entity) {
         this.id = entity.getId();;
         this.username = entity.getUsername();
-        this.logindId = entity.getLoginId();
+        this.loginId = entity.getLoginId();
         this.address = entity.getAddress();
     }
 
     @QueryProjection
-    public MemberResponseDto(Long id, String username, String logindId, Address address) {
+    public MemberResponseDto(Long id, String username, String loginId, Address address) {
         this.id = id;
         this.username = username;
-        this.logindId = logindId;
+        this.loginId = loginId;
         this.address = address;
     }
 }
