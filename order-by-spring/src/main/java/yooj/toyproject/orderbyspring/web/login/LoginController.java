@@ -8,7 +8,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import yooj.toyproject.orderbyspring.service.LoginService;
-import yooj.toyproject.orderbyspring.web.LoginMemberDto;
 import yooj.toyproject.orderbyspring.web.SessionConst;
 import yooj.toyproject.orderbyspring.web.argumentresolver.Login;
 
@@ -39,7 +38,6 @@ public class LoginController {
 
     }
     @GetMapping("/login")
-//    @ResponseBody
     public String homeLogin(@Login LoginMemberDto loginMember, HttpServletRequest request, Model model) {
         if (loginMember == null) {
             model.addAttribute("form", new LoginForm());

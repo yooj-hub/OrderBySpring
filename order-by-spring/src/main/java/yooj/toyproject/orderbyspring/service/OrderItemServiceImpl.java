@@ -7,6 +7,7 @@ import yooj.toyproject.orderbyspring.domain.Order;
 import yooj.toyproject.orderbyspring.domain.OrderItem;
 import yooj.toyproject.orderbyspring.domain.OrderStatus;
 import yooj.toyproject.orderbyspring.repository.OrderItemRepository;
+import yooj.toyproject.orderbyspring.repository.OrderRepository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderItemServiceImpl implements OrderItemService {
     private final OrderItemRepository orderItemRepository;
+    private final OrderRepository orderRepository;
 
     @Override
     @Transactional
@@ -29,15 +31,16 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
-    public List<OrderItem> findByOrder(Order order) {
-        return orderItemRepository.findByOrder(order);
+    public List<OrderItem> findByOrder(Long orderId) {
+        return orderItemRepository.findByOrder(orderId);
     }
 
     @Override
     @Transactional
-    public Long cancelAll(Order order) {
+    public Long cancelAll(Long orderId) {
+        Order order = orderRepository.getById(orderId);
         order.changeOrderStatus(OrderStatus.CANCEL);
-        findByOrder(order)
+        findByOrder(orderId)
                 .forEach(o -> o.getItem().changeStockQuantity(-1 * o.getQuantity()));
         return orderItemRepository.cancelAll(order);
     }
@@ -50,7 +53,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
-    public Integer getTotalOrderPrice(Order order) {
-        return findByOrder(order).stream().map(OrderItem::getTotalPrice).reduce(Integer::sum).orElse(0);
+    public Integer getTotalOrderPrice(Long orderId) {
+        return findByOrder(orderId).stream().map(OrderItem::getTotalPrice).reduce(Integer::sum).orElse(0);
     }
 }

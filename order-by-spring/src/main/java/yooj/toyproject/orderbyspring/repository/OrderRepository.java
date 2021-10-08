@@ -7,7 +7,7 @@ import yooj.toyproject.orderbyspring.domain.Order;
 
 import java.util.List;
 
-public interface OrderRepository extends JpaRepository<Order, Long> {
+public interface OrderRepository extends JpaRepository<Order, Long>, OrderRepositoryCustom {
 
     @Query("select o from Order o where o.member.id= :memberId")
     List<Order> findByMemberId(@Param("memberId") Long memberId);

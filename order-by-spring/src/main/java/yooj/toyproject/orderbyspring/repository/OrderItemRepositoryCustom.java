@@ -6,7 +6,7 @@ import yooj.toyproject.orderbyspring.domain.OrderItem;
 import java.util.List;
 
 public interface OrderItemRepositoryCustom {
-    List<OrderItem> findByOrder(Order order);
+    List<OrderItem> findByOrder(Long orderId);
     Long cancelAll(Order order);
 
 }

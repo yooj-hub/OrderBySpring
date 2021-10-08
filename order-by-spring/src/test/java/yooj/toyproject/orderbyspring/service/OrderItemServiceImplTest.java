@@ -1,6 +1,6 @@
 package yooj.toyproject.orderbyspring.service;
 
-import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import yooj.toyproject.orderbyspring.domain.*;
 import yooj.toyproject.orderbyspring.domain.item.Instrument;
 import yooj.toyproject.orderbyspring.domain.item.Item;
+import yooj.toyproject.orderbyspring.repository.MemberRepository;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
@@ -30,6 +31,14 @@ class OrderItemServiceImplTest {
     ItemService itemService;
     @Autowired
     EntityManager em;
+    @Autowired
+    MemberRepository memberRepository;
+    @AfterEach
+    void after(){
+        memberRepository.deleteAll();
+
+    }
+
 
     @Test
     void 주문_아이템_생성_및_주문_총_가격_조회() throws Exception {
@@ -112,8 +121,8 @@ class OrderItemServiceImplTest {
         OrderItem savedOrderItem5 = orderItemService.save(orderItem5);
 
         //when
-        List<OrderItem> findOrderItems1 = orderItemService.findByOrder(savedOrder1);
-        List<OrderItem> findOrderItems2 = orderItemService.findByOrder(savedOrder2);
+        List<OrderItem> findOrderItems1 = orderItemService.findByOrder(savedOrder1.getId());
+        List<OrderItem> findOrderItems2 = orderItemService.findByOrder(savedOrder2.getId());
 
         //then
         assertThat(findOrderItems1.size()).isEqualTo(3);
@@ -171,7 +180,7 @@ class OrderItemServiceImplTest {
         orderItemService.save(orderItem3);
 
         //when
-        Long cnt = orderItemService.cancelAll(savedOrder1);
+        Long cnt = orderItemService.cancelAll(savedOrder1.getId());
 
         //then
         assertThat(cnt).isEqualTo(3);

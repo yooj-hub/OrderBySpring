@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yooj.toyproject.orderbyspring.domain.Member;
 import yooj.toyproject.orderbyspring.repository.MemberRepository;
-import yooj.toyproject.orderbyspring.web.LoginMemberDto;
+import yooj.toyproject.orderbyspring.web.login.LoginMemberDto;
 
 @Service
 @Transactional(readOnly = true)

@@ -1,6 +1,6 @@
 package yooj.toyproject.orderbyspring.service;
 
-import yooj.toyproject.orderbyspring.web.LoginMemberDto;
+import yooj.toyproject.orderbyspring.web.login.LoginMemberDto;
 
 public interface LoginService {
 

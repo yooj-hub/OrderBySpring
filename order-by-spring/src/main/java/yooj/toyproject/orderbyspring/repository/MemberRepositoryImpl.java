@@ -1,8 +1,8 @@
 package yooj.toyproject.orderbyspring.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import yooj.toyproject.orderbyspring.web.LoginMemberDto;
-import yooj.toyproject.orderbyspring.web.QLoginMemberDto;
+import yooj.toyproject.orderbyspring.web.login.LoginMemberDto;
+import yooj.toyproject.orderbyspring.web.login.QLoginMemberDto;
 
 
 import javax.persistence.EntityManager;
@@ -27,7 +27,6 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
                 .from(member)
                 .where(member.loginId.eq(loginId).and(member.password.eq(password))
                 ).fetchOne()).orElse(null);
-//                .orElseThrow(()-> new IllegalArgumentException("아이디와 비밀번호를 확인해 주세요."));
     }
 
     @Override

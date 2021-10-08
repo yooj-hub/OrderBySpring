@@ -10,15 +10,16 @@ import javax.persistence.*;
 @Entity
 @Table(name = "member", uniqueConstraints = {@UniqueConstraint(name = "login_id_unique", columnNames = "loginId")})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-//@NoArgsConstructor
 @ToString
 public class Member extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "member_id")
     private Long id;
     private String username;
     private String loginId;
+
     private String password;
     @Embedded
     private Address address;

@@ -1,11 +1,13 @@
 package yooj.toyproject.orderbyspring.repository;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import yooj.toyproject.orderbyspring.domain.Address;
 import yooj.toyproject.orderbyspring.domain.Member;
-import yooj.toyproject.orderbyspring.web.LoginMemberDto;
+import yooj.toyproject.orderbyspring.web.login.LoginMemberDto;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -13,6 +15,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 class MemberRepositoryTest {
     @Autowired
     MemberRepository memberRepository;
+    @AfterEach
+    void after(){
+        memberRepository.deleteAll();
+    }
+    @BeforeEach
+    void before(){
+        memberRepository.deleteAll();
+    }
 
     @Test
     void 로그인() throws Exception {

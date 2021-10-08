@@ -10,7 +10,8 @@
         padding: 2rem;
         display: flex;
         justify-content: center;
-        font-size: 2rem;
+        font-size: 1.5rem;
+
     }
 
     a {
@@ -19,14 +20,14 @@
 
     a:hover {
         color: red;
-        font-size: 2.1rem;
+        font-size: 1.6rem;
     }
 
     .menu {
         text-align: center;
         margin-bottom: 1rem;
-        background: linear-gradient(yellow, yellowgreen, yellow);
-        padding: 0.1rem;
+        background-color:dodgerblue;
+        padding: 0.8rem;
         border-radius: 10%;
     }
     .form-background{
@@ -43,6 +44,12 @@
     .subject {
         text-align: center;
     }
+    .menu-name{
+        color: white;
+    }
+    .menu:hover{
+        background-color: #0A70df;
+    }
 </style>
 <body>
 <div class="box">
@@ -54,10 +61,10 @@
     <div class="menus">
         <div class="locate">
             <div class="menu">
-                <a th:href="@{/login}">로그인</a>
+                <a th:href="@{/login}"><div class="menu-name">로그인</div></a>
             </div>
             <div class="menu">
-                <a th:href="@{/join}">회원 가입</a>
+                <a th:href="@{/join}"><div class="menu-name">회원 가입</div></a>
             </div>
         </div>
     </div>

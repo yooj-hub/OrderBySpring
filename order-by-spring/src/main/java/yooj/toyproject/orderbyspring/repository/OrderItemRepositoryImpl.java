@@ -15,11 +15,11 @@ public class OrderItemRepositoryImpl implements OrderItemRepositoryCustom {
     private final EntityManager em;
 
     @Override
-    public List<OrderItem> findByOrder(Order order) {
+    public List<OrderItem> findByOrder(Long orderId) {
         JPAQueryFactory queryFactory = new JPAQueryFactory(em);
         return queryFactory
                 .selectFrom(orderItem)
-                .where(orderItem.order.id.eq(order.getId()))
+                .where(orderItem.order.id.eq(orderId))
                 .fetch();
     }
 

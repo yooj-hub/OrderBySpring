@@ -3,7 +3,7 @@ package yooj.toyproject.orderbyspring.web.form;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import yooj.toyproject.orderbyspring.web.LoginMemberDto;
+import yooj.toyproject.orderbyspring.web.login.LoginMemberDto;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -16,8 +16,6 @@ public class MemberEditForm {
     private Long id;
     @NotEmpty
     private String username;
-//    @NotEmpty
-//    private String loginId;
     @NotEmpty
     private String password;
     @NotEmpty

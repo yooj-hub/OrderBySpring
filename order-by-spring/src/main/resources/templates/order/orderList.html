@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>LoginForm</title>
+    <div th:replace="/layout/header :: header"></div>
+</head>
+<style>
+    button, input[type="submit"], input[type="reset"] {
+        background: none;
+        color: inherit;
+        border: none;
+        padding: 0;
+        font: inherit;
+        cursor: pointer;
+        outline: inherit;
+    }
+
+    .box {
+        margin-top: 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /*float: contour;*/
+    }
+
+    .form-background {
+        background-color: #e7e7e7;
+        padding: 20px;
+        border-radius: 10%;
+    }
+
+    .list-group-item:hover {
+        background-color: #0A70df;
+        color: white;
+    }
+
+    .order-date, .order-address, .order-price, .username {
+        display: flex;
+
+    }
+
+    .order-date {
+        color: #565459;
+        font-size: 0.5rem;
+        float: right;
+    }
+
+    .list-group-item {
+        display: flex;
+    }
+
+    .order-status {
+        display: flex;
+        margin-left: 10px;
+        justify-content: center;
+        align-items: center;
+        padding-right: 1.3rem;
+        padding-left: 1.3rem;
+
+    }
+
+    .order-status {
+        color: white;
+        min-width: 10rem;
+        margin-bottom: 0.3rem;
+    }
+
+    .order-status:hover {
+        filter: brightness(120%);
+
+    }
+
+    .ACCEPTED {
+
+        background: forestgreen;
+    }
+    .CANCEL{
+        background: #A5081c;
+    }
+    .COMPLETED{
+        background: #292a8b;
+    }
+</style>
+<body>
+<dvi class="box">
+    <div class="form-background">
+        <ul class="list-group" th:each="order : ${orderList}">
+            <form th:action="@{/order/edit/{id}(id=${order.orderId})}" method="post">
+                <button type="submit">
+                    <div style="display: flex">
+                        <li class="list-group-item" style="padding-bottom:1rem; margin-bottom: 0.3rem">
+                            <div class="order">
+                                <div class="info">
+                                    <div class="username">
+                                        주문자 : <span th:text="${order.username}"></span>
+                                    </div>
+                                    <div class="order-price">
+                                        주문 가격 : <span th:text="${order.totalPrice}"></span>
+                                    </div>
+
+                                    <div class="order-address">
+                                        배달 장소 : <span
+                                            th:text="|${order.address.city} ${order.address.street} ${order.address.zipcode}|"></span>
+                                    </div>
+                                    <div class="order-date">
+                                        주문 날짜 : <span th:text="${order.orderDate}"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </li>
+                        <div class="order-status" th:classappend="${order.status.name()}">
+                            <span th:text="${order.status.name()}"></span>
+                        </div>
+                    </div>
+                </button>
+            </form>
+        </ul>
+    </div>
+</dvi>
+
+</body>
+</html>

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import yooj.toyproject.orderbyspring.domain.Address;
 import yooj.toyproject.orderbyspring.domain.Member;
 import yooj.toyproject.orderbyspring.service.MemberService;
-import yooj.toyproject.orderbyspring.web.LoginMemberDto;
+import yooj.toyproject.orderbyspring.web.login.LoginMemberDto;
 import yooj.toyproject.orderbyspring.web.argumentresolver.Login;
 import yooj.toyproject.orderbyspring.web.form.MemberEditForm;
 import yooj.toyproject.orderbyspring.web.form.MemberJoinForm;
@@ -34,7 +34,6 @@ public class MemberController {
 
     @PostMapping("/join")
     public String join(@Validated @ModelAttribute(name = "form") MemberJoinForm form, BindingResult bindingResult) {
-        log.info("{}", bindingResult);
         if (memberService.findByLoginId(form.getLoginId()).isPresent()) {
             bindingResult.reject("duplicate Id", "아이디가 중복되었습니다.");
         }

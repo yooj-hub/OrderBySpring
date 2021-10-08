@@ -1,5 +1,7 @@
 package yooj.toyproject.orderbyspring.service;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -8,6 +10,7 @@ import yooj.toyproject.orderbyspring.domain.Address;
 import yooj.toyproject.orderbyspring.domain.Member;
 import yooj.toyproject.orderbyspring.domain.Order;
 import yooj.toyproject.orderbyspring.domain.OrderStatus;
+import yooj.toyproject.orderbyspring.repository.MemberRepository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -24,6 +27,13 @@ class OrderServiceImplTest {
     MemberService memberService;
     @Autowired
     EntityManager em;
+    @Autowired
+    MemberRepository memberRepository;
+    @AfterEach
+    void after(){
+        memberRepository.deleteAll();
+
+    }
 
     @Test
     void 주문생성() throws Exception {

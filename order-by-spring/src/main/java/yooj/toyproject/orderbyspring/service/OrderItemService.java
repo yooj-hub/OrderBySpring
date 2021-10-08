@@ -10,13 +10,13 @@ public interface OrderItemService {
 
     OrderItem findById(Long orderItemId);
 
-    List<OrderItem> findByOrder(Order order);
+    List<OrderItem> findByOrder(Long orderId);
 
-    Long cancelAll(Order order);
+    Long cancelAll(Long orderId);
 
     void cancelOne(OrderItem orderItem);
 
-    Integer getTotalOrderPrice(Order order);
+    Integer getTotalOrderPrice(Long orderId);
 
 
 }

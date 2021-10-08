@@ -1,4 +1,4 @@
-package yooj.toyproject.orderbyspring.web;
+package yooj.toyproject.orderbyspring.web.login;
 
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Data;

@@ -32,7 +32,7 @@
         text-decoration: none;
     }
 
-    a:hover, .logout:hover {
+    a:hover {
         color: red;
         font-size: 2.1rem;
     }
@@ -41,8 +41,11 @@
         text-align: center;
         padding: 0.1rem;
         margin-bottom: 1rem;
-        background: linear-gradient(yellow, yellowgreen, yellow);
+        background-color: dodgerblue;
         border-radius: 10%;
+    }
+    .menu:hover{
+        background-color: #0e80ef;
     }
 
     .form-background {
@@ -64,6 +67,12 @@
         align-items: center;
         justify-content: center;
     }
+    .menu-name{
+        color: white;
+    }
+    .menu:hover{
+        background-color: #0A70df;
+    }
 
 
 </style>
@@ -78,10 +87,10 @@
         <div class="menus">
             <div class="locate">
                 <div class="menu">
-                    <a th:href="@{/edit(loginMember)}">회원 정보 수정</a>
+                    <a th:href="@{/edit(loginMember)}"><div class="menu-name" >회원 정보 수정</div></a>
                 </div>
                 <div class="menu">
-                    <a th:href="@{/order}">주문 하기</a>
+                    <a th:href="@{/order}"><div <div> >주문 하기</div></a>
                 </div>
                 <div class="menu">
                     <a>주문 확인하기</a>

@@ -1,11 +1,14 @@
 package yooj.toyproject.orderbyspring.service;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import yooj.toyproject.orderbyspring.domain.Address;
 import yooj.toyproject.orderbyspring.domain.Member;
+import yooj.toyproject.orderbyspring.repository.MemberRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Inheritance;
@@ -20,6 +23,18 @@ class MemberServiceImplTest {
     MemberService memberService;
     @Autowired
     EntityManager em;
+    @Autowired
+    MemberRepository memberRepository;
+    @AfterEach
+    void after(){
+        memberRepository.deleteAll();
+    }
+    @BeforeEach
+    void before(){
+        memberRepository.deleteAll();
+    }
+
+
 
     @Test
     void 회원가입및조회() throws Exception {

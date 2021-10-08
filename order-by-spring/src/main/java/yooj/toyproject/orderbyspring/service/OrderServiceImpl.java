@@ -7,8 +7,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 import yooj.toyproject.orderbyspring.domain.Order;
 import yooj.toyproject.orderbyspring.repository.OrderRepository;
+import yooj.toyproject.orderbyspring.web.dto.OrderListDto;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.*;
 
 @Service
 @RequiredArgsConstructor
@@ -47,5 +52,25 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void deleteOrder(Order order) {
         orderRepository.delete(order);
+    }
+
+    @Override
+    public int findOrderPrice(Long orderId) {
+        Integer orderPrice = orderRepository.findOrderPrice(orderId);
+        return orderPrice != null ? orderPrice : 0;
+    }
+
+    @Override
+    public List<OrderListDto> findOrderListDto(Long memberId) {
+        return orderRepository
+                .findOrderListQueryDtoByMemberId(memberId)
+                .stream()
+                .map(q -> new OrderListDto(q.getOrderId(),
+                        q.getUsername(),
+                        q.getStatus(),
+                        q.getAddress(),
+                        findOrderPrice(q.getOrderId()),
+                        q.getOrderDate()))
+                .collect(toList());
     }
 }

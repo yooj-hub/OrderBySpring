@@ -3,7 +3,7 @@ package yooj.toyproject.orderbyspring.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import yooj.toyproject.orderbyspring.web.LoginMemberDto;
+import yooj.toyproject.orderbyspring.web.login.LoginMemberDto;
 import yooj.toyproject.orderbyspring.web.argumentresolver.Login;
 
 @Controller
