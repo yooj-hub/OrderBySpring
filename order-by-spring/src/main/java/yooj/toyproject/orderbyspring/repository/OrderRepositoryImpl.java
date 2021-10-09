@@ -6,7 +6,6 @@ import yooj.toyproject.orderbyspring.domain.QMember;
 import yooj.toyproject.orderbyspring.domain.QOrder;
 import yooj.toyproject.orderbyspring.domain.QOrderItem;
 import yooj.toyproject.orderbyspring.web.dto.OrderListQueryDto;
-import yooj.toyproject.orderbyspring.web.dto.QOrderListQueryDto;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -59,6 +58,15 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
                 .select(orderItem.totalPrice.sum())
                 .from(orderItem)
                 .where(orderItem.order.id.eq(orderId))
+                .fetchOne();
+    }
+
+    @Override
+    public Long findMemberIdByOrderId(Long orderId) {
+        return queryFactory
+                .select(order.member.id)
+                .from(order)
+                .where(order.id.eq(orderId))
                 .fetchOne();
     }
 }

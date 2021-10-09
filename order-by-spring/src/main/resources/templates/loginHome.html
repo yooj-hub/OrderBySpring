@@ -43,8 +43,10 @@
         margin-bottom: 1rem;
         background-color: dodgerblue;
         border-radius: 10%;
+        min-width: 16rem;
     }
-    .menu:hover{
+
+    .menu:hover {
         background-color: #0e80ef;
     }
 
@@ -57,6 +59,7 @@
     .subject {
         text-align: center;
     }
+
     /*    display: flex;*/
     /*    flex-direction: column;*/
     /*}*/
@@ -67,10 +70,12 @@
         align-items: center;
         justify-content: center;
     }
-    .menu-name{
+
+    .menu-name {
         color: white;
     }
-    .menu:hover{
+
+    .menu:hover {
         background-color: #0A70df;
     }
 
@@ -87,18 +92,26 @@
         <div class="menus">
             <div class="locate">
                 <div class="menu">
-                    <a th:href="@{/edit(loginMember)}"><div class="menu-name" >회원 정보 수정</div></a>
+                    <a th:href="@{/edit(loginMember)}">
+                        <div class="menu-name">회원 정보 수정</div>
+                    </a>
                 </div>
                 <div class="menu">
-                    <a th:href="@{/order}"><div <div> >주문 하기</div></a>
+                    <a th:href="@{/order}">
+                        <div><div class="menu-name">
+                            주문 하기</div>
+                        </div>
+                    </a>
                 </div>
                 <div class="menu">
-                    <a>주문 확인하기</a>
+                    <a th:href="@{/order/orderList}">
+                        <div class="menu-name">주문 확인하기</div>
+                    </a>
                 </div>
                 <div class="menu">
                     <form th:action="@{/logout}" method="post" class="logout">
                         <button onclick="location.href='home.html'" type="submit">
-                            로그 아웃
+                            <div class="menu-name">로그 아웃</div>
                         </button>
                     </form>
                 </div>

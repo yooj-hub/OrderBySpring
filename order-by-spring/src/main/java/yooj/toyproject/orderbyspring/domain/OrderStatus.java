@@ -1,5 +1,5 @@
 package yooj.toyproject.orderbyspring.domain;
 
 public enum OrderStatus {
-    COMPLETED,ACCEPTED,CANCEL
+    WAITING,COMPLETED,ACCEPTED,CANCEL,ONGOING
 }

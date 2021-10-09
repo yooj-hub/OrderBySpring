@@ -70,9 +70,7 @@
         filter: brightness(120%);
 
     }
-
     .ACCEPTED {
-
         background: forestgreen;
     }
     .CANCEL{
@@ -81,12 +79,26 @@
     .COMPLETED{
         background: #292a8b;
     }
+    .ONGOING{
+        background: #dec24a;
+    }
+    .WAITING{
+        background: rgba(5,2,4,0.96);
+    }
+    .field-error {
+        color: red;
+    }
 </style>
 <body>
 <dvi class="box">
     <div class="form-background">
+        <div th:if="${authorization}!=null">
+            <div  class="field-error" style="text-align: center; margin-bottom: 1rem">
+                <span th:text="${authorization}"></span>
+            </div>
+        </div>
         <ul class="list-group" th:each="order : ${orderList}">
-            <form th:action="@{/order/edit/{id}(id=${order.orderId})}" method="post">
+            <form th:action="@{/order/info/{id}(id=${order.orderId})}" method="get">
                 <button type="submit">
                     <div style="display: flex">
                         <li class="list-group-item" style="padding-bottom:1rem; margin-bottom: 0.3rem">
@@ -107,9 +119,7 @@
                                         주문 날짜 : <span th:text="${order.orderDate}"></span>
                                     </div>
                                 </div>
-
                             </div>
-
                         </li>
                         <div class="order-status" th:classappend="${order.status.name()}">
                             <span th:text="${order.status.name()}"></span>

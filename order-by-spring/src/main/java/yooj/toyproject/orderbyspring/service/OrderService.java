@@ -20,5 +20,7 @@ public interface OrderService {
 
     List<OrderListDto> findOrderListDto(Long memberId);
 
+    boolean checkMemberId(Long orderId,Long memberId);
+
 
 }

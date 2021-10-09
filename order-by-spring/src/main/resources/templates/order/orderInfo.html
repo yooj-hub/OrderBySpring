@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>LoginForm</title>
+    <div th:replace="/layout/header :: header"></div>
+</head>
+<style>
+    .field-error {
+        border-color: red;
+        color: red;
+    }
+
+    .box {
+        margin-top: 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .form-background {
+        min-width: 30rem;
+        background-color: #e7e7e7;
+        padding: 20px;
+        border-radius: 10%;
+    }
+
+    .sub-btn {
+        margin-top: 1rem;
+        display: flex;
+        float: right;
+    }
+
+    input {
+        display: flex;
+        float: right;
+    }
+
+    #totalPrice, #orderPrice, #quantity, #itemName {
+        font-size: 0.9rem;
+        display: flex;
+        float: right;
+    }
+
+    .bg-block {
+        background: aliceblue;
+        margin-bottom: 1rem;
+    }
+
+    .address {
+        font-size: 0.9rem;
+        display: flex;
+        float: right;
+
+    }
+
+    .count {
+        font-size: 1.2rem;
+        font-style: italic;
+    }
+
+    .status {
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+
+</style>
+<body>
+<div class="box">
+    <div class="form-background">
+        <div>
+            <div class="status" th:text="${status}"></div>
+            <div th:each="orderItem : ${orderItemList}">
+                <div class="bg-block" th:object="${orderItem}">
+                    <div class="form-group count">
+                        <span th:text="${orderItemStat.count}"></span>
+                        번째 상품
+                    </div>
+                    <div class="form-group">
+                        <label for="brand">브랜드 명 : </label>
+                        <span id="brand" th:text="*{itemBrand}"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="itemName">상품 명 : </label>
+                        <span id="itemName" th:text="*{itemName}"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="orderPrice">주문 가격 : </label>
+                        <span id="orderPrice" th:text="*{orderPrice}"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="quantity">주문 수량 : </label>
+                        <span id="quantity" th:text="*{quantity}"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="totalPrice">총 가격 : </label>
+                        <span id="totalPrice" th:text="*{totalPrice}"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="address" th:object="${address}">
+                배달 장소 : <span th:text="|*{city} *{street} *{zipcode}|"></span>
+            </div>
+            <form action="#" th:action="@{/order/edit/{id}(id=${orderId})}" method="get">
+                <div th:if="${status.name()}=='WAITING'">
+                    <button type="submit" class="btn btn-primary sub-btn">Edit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

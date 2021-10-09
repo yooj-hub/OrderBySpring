@@ -58,16 +58,9 @@
                 <input type="text" id="username" th:field="*{username}" th:errorclass="field-error"
                        placeholder="Enter Username">
             </div>
-<!--            <div class="form-group">-->
-<!--                <div class="field-error" th:errors="*{loginId}"></div>-->
-<!--                <label for="loginId">Login Id</label>-->
-<!--                <input type="text" id="loginId" th:field="*{loginId}" th:errorclass="field-error"-->
-<!--                       placeholder="Enter loginId">-->
-
-<!--            </div>-->
             <div class="form-group">
                 <div class="field-error" th:errors="*{currentPassword}"></div>
-                <label for="password">Current Password</label>
+                <label for="current-password">Current Password</label>
                 <input type="password" id="current-password" th:field="*{currentPassword}" th:errorclass="field-error"
                        placeholder="Enter Password">
             </div>
@@ -86,14 +79,14 @@
             </div>
             <div class="form-group">
                 <div class="field-error" th:errors="*{street}"></div>
-                <label for="loginId">Street</label>
+                <label for="street">Street</label>
                 <input type="text" id="street" th:field="*{street}" th:errorclass="field-error"
                        placeholder="Enter Street">
 
             </div>
             <div class="form-group">
                 <div class="field-error" th:errors="*{zipcode}"></div>
-                <label for="loginId">Zipcode</label>
+                <label for="zipcode">Zipcode</label>
                 <input type="text" id="zipcode" th:field="*{zipcode}" th:errorclass="field-error"
                        placeholder="Enter Zipcode">
 

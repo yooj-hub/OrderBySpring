@@ -1,17 +1,14 @@
 package yooj.toyproject.orderbyspring.service;
 
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.ManyToAny;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 import yooj.toyproject.orderbyspring.domain.Order;
 import yooj.toyproject.orderbyspring.repository.OrderRepository;
 import yooj.toyproject.orderbyspring.web.dto.OrderListDto;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 import static java.util.stream.Collectors.*;
 
@@ -72,5 +69,11 @@ public class OrderServiceImpl implements OrderService {
                         findOrderPrice(q.getOrderId()),
                         q.getOrderDate()))
                 .collect(toList());
+    }
+
+    @Override
+    public boolean checkMemberId(Long orderId, Long memberId) {
+        Long memberIdByOrderId = orderRepository.findMemberIdByOrderId(orderId);
+        return memberIdByOrderId != null && Objects.equals(memberIdByOrderId, memberId);
     }
 }

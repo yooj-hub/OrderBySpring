@@ -34,26 +34,37 @@ public class TestDummy {
     public void init() {
         Address address = new Address("seoul", "gwan", "12340");
         Member member = Member.builder()
-                .username("esw")
+                .username("testMember")
                 .loginId("test")
                 .password("test!")
                 .address(address)
                 .build();
         memberService.save(member);
         Instrument item1 = new Instrument("item1", 1000, 100, "sang", LocalDateTime.now());
+        Instrument item2 = new Instrument("item2", 2000, 100, "dol", LocalDateTime.now());
         Item savedItem = itemService.save(item1);
+        Item savedItem2 = itemService.save(item2);
         Order order = new Order(member, OrderStatus.ACCEPTED);
         Order order2 = new Order(member, OrderStatus.ACCEPTED);
         Order order3 = new Order(member, OrderStatus.COMPLETED);
+        Order order4 = new Order(member, OrderStatus.ONGOING);
+        Order order5 = new Order(member, OrderStatus.WAITING);
+        Order order6 = new Order(member, OrderStatus.WAITING);
         Order savedOrder = orderService.save(order);
         Order savedOrder2 = orderService.save(order2);
         Order savedOrder3 = orderService.save(order3);
+        Order savedOrder4 = orderService.save(order4);
+        Order savedOrder5 = orderService.save(order5);
         OrderItem orderItem = new OrderItem(savedOrder, savedItem.getPrice(), 10, savedItem);
         OrderItem savedOrderItem = orderItemService.save(orderItem);
+        orderItemService.save(new OrderItem(savedOrder, savedItem2.getPrice(), 5, savedItem2));
         OrderItem orderItem2 = new OrderItem(savedOrder2, savedItem.getPrice(), 10, savedItem);
         OrderItem savedOrderItem2 = orderItemService.save(orderItem2);
         OrderItem orderItem3 = new OrderItem(savedOrder3, savedItem.getPrice(), 10, savedItem);
         OrderItem savedOrderItem3 = orderItemService.save(orderItem3);
+        orderItemService.save(new OrderItem(savedOrder4,savedItem2.getPrice(),10,savedItem2));
+        orderItemService.save(new OrderItem(savedOrder5,savedItem2.getPrice(),10,savedItem2));
+        orderItemService.save(new OrderItem(savedOrder5, savedItem.getPrice(),5,savedItem));
         orderItemService.cancelAll(savedOrder2.getId());
 
     }

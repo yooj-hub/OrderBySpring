@@ -8,6 +8,7 @@ import yooj.toyproject.orderbyspring.domain.OrderItem;
 import yooj.toyproject.orderbyspring.domain.OrderStatus;
 import yooj.toyproject.orderbyspring.repository.OrderItemRepository;
 import yooj.toyproject.orderbyspring.repository.OrderRepository;
+import yooj.toyproject.orderbyspring.web.dto.OrderItemDto;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -55,5 +56,10 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Override
     public Integer getTotalOrderPrice(Long orderId) {
         return findByOrder(orderId).stream().map(OrderItem::getTotalPrice).reduce(Integer::sum).orElse(0);
+    }
+    @Override
+    public List<OrderItemDto> findOrderItemDto(Long orderId){
+        return orderItemRepository.getOrderItemDto(orderId);
+
     }
 }
