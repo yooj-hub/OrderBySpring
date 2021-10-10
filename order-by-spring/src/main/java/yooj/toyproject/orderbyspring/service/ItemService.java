@@ -11,5 +11,7 @@ public interface ItemService {
     List<Item> findByName(String name);
     void deleteItem(Item item);
     List<Item> findAllByName(ItemSearch search);
-
+    List<Item> findByOrderId(Long orderId);
+    void updateStockQuantity(Long itemId,int quantity);
+    void updateStockQuantity(Item item,int quantity);
 }

@@ -46,4 +46,23 @@ public class ItemServiceImpl implements ItemService {
     public List<Item> findAllByName(ItemSearch search) {
         return itemRepository.findAllByName(search);
     }
+
+    @Override
+    public List<Item> findByOrderId(Long orderId) {
+        return itemRepository.findByOrderId(orderId);
+    }
+
+    @Override
+    @Transactional
+    public void updateStockQuantity(Long itemId, int quantity) {
+        findById(itemId).swapQuantity(quantity);
+    }
+
+    @Override
+    @Transactional
+    public void updateStockQuantity(Item item, int quantity) {
+        findById(item.getId()).swapQuantity(quantity);
+    }
+
+
 }

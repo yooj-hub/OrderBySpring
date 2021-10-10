@@ -1,9 +1,12 @@
 package yooj.toyproject.orderbyspring.service;
 
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.ManyToAny;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import yooj.toyproject.orderbyspring.domain.Address;
 import yooj.toyproject.orderbyspring.domain.Order;
+import yooj.toyproject.orderbyspring.domain.item.Item;
 import yooj.toyproject.orderbyspring.repository.OrderRepository;
 import yooj.toyproject.orderbyspring.web.dto.OrderListDto;
 
@@ -76,4 +79,17 @@ public class OrderServiceImpl implements OrderService {
         Long memberIdByOrderId = orderRepository.findMemberIdByOrderId(orderId);
         return memberIdByOrderId != null && Objects.equals(memberIdByOrderId, memberId);
     }
+
+    @Override
+    @Transactional
+    public void changeAddress(Long orderId, Address address) {
+        orderRepository
+                .findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("주문 조회 불가"))
+                .getAddress()
+                .changeAddress(address);
+    }
+
+
+
 }

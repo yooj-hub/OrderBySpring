@@ -7,6 +7,7 @@ import yooj.toyproject.orderbyspring.domain.Order;
 import yooj.toyproject.orderbyspring.domain.OrderItem;
 import yooj.toyproject.orderbyspring.domain.item.Instrument;
 import yooj.toyproject.orderbyspring.domain.item.Item;
+import yooj.toyproject.orderbyspring.domain.item.QItem;
 import yooj.toyproject.orderbyspring.web.dto.OrderItemDto;
 import yooj.toyproject.orderbyspring.web.dto.QOrderItemDto;
 
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.*;
 import static yooj.toyproject.orderbyspring.domain.QOrderItem.orderItem;
+import static yooj.toyproject.orderbyspring.domain.item.QItem.item;
 
 public class OrderItemRepositoryImpl implements OrderItemRepositoryCustom {
     private final JPAQueryFactory queryFactory;
@@ -72,5 +74,16 @@ public class OrderItemRepositoryImpl implements OrderItemRepositoryCustom {
 
     private boolean checkTypeInstrument(Item item) {
         return item instanceof Instrument;
+    }
+    @Override
+    public List<OrderItem> findByOrderIdWithItem(Long orderId){
+        return queryFactory
+                .select(orderItem)
+                .from(orderItem)
+                .join(orderItem.item, item)
+                .fetchJoin()
+                .where(orderItem.order.id.eq(orderId))
+                .fetch();
+
     }
 }

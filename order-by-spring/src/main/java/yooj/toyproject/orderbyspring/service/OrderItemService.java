@@ -1,7 +1,9 @@
 package yooj.toyproject.orderbyspring.service;
 
+import org.springframework.transaction.annotation.Transactional;
 import yooj.toyproject.orderbyspring.domain.Order;
 import yooj.toyproject.orderbyspring.domain.OrderItem;
+import yooj.toyproject.orderbyspring.domain.item.Item;
 import yooj.toyproject.orderbyspring.web.dto.OrderItemDto;
 
 import java.util.List;
@@ -21,4 +23,11 @@ public interface OrderItemService {
 
 
     List<OrderItemDto> findOrderItemDto(Long orderId);
+
+    List<OrderItem> findByOrderIdWithItem(Long orderId);
+
+    void orderItemChange(Long orderId, List<OrderItemDto> orderItemDtoList);
+
+    OrderItem makeOrderItem(Long orderId, int orderPrice, int quantity, Long itemId);
+
 }

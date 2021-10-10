@@ -43,7 +43,7 @@
         margin-bottom: 1rem;
     }
 
-    #brand, #orderPrice, #quantity, #itemName, #city, #street, #zipcode {
+    #brand, #orderPrice, #quantity, #itemName, #city, #street, #zipcode,#orderStockQuantity {
         font-size: 0.9rem;
         display: flex;
         float: right;
@@ -53,6 +53,7 @@
     .bg-block {
         background: aliceblue;
         margin-bottom: 1rem;
+        padding-bottom: 1rem;
     }
 
     .address {
@@ -64,8 +65,8 @@
 
     input {
         display: flex;
-        /*margin-bottom: 0.2rem;*/
         float: right;
+        text-align: right;
     }
 
     .count {
@@ -82,99 +83,141 @@
         margin-top: 1rem;
     }
 
+    .value1 {
+        font-size: 0rem;
+    }
+
+    .tp {
+        display: flex;
+        float: right;
+        margin-right: 1rem;
+        margin-bottom: 1rem;
+    }
+
+
 </style>
 <body>
 <div class="box">
     <div class="form-background">
-        <form action="#" th:action method="post">
+        <form action="#" th:action="@{/order/edit/{id}(id=${orderId})}" method="post" th:object="${orderItemListForm}">
             <div class="status" th:text="${status}"></div>
             <script th:inline="javascript">
                 let realTotalPrice = 0;
                 let orderPrice = [];
                 let quantity = [];
                 let totalPrice = [];
+                let maxQuantity=[];
+                var changeQuantity = (payload) => {
+                    var q = Number(payload.value);
+                    var name = payload.name;
+                    var idx="";
+                    var tmpIdx="";
+                    for(var i=0;i<=name.length;i++){
+                        if(name[i]==="["){
+                            i++;
+                            while(name[i]!=="]"){
+                                tmpIdx+=name[i++];
+                            }
+                            break;
+                        }
+                    }
+                    idx = Number(tmpIdx);
+                    quantity[ idx ] = Number(q);
+                    realTotalPrice -= Number(totalPrice[idx]);
+                    totalPrice[ idx ] = Number(q) * Number( orderPrice[idx] );
+                    realTotalPrice += Number(totalPrice[idx]);
+                    if(q>maxQuantity[ idx ]){
+                        alert((idx+1)+"번째 상품의 주문 가능 수량이 초과했습니다.");
+                    }
+                    document.getElementById("realTotalPrice").innerText = realTotalPrice;
+                    document.getElementById("print-totalPrice" + idx).innerText = Number(totalPrice[idx]);
+                }
             </script>
-            <div th:each="orderItem : ${orderItemList}">
-                <div class="bg-block" th:object="${orderItem}">
+            <div th:each="orderItemDto : *{orderItemForm}">
+                <div class="bg-block" >
                     <div class="form-group count">
-                        <span th:text="${orderItemStat.count}"></span>
+                        <span th:text="${orderItemDtoStat.count}"></span>
                         번째 상품
                     </div>
+                    <div class="field-error" th:errors="*{orderItemForm[__${orderItemDtoStat.index}__]}"></div>
+                    <input type="hidden" th:field="*{orderItemForm[__${orderItemDtoStat.index}__].id}">
+                    <input type="hidden" th:field="*{orderItemForm[__${orderItemDtoStat.index}__].totalPrice}">
+                    <input type="hidden" th:field="*{orderItemForm[__${orderItemDtoStat.index}__].itemName}">
+                    <input type="hidden" th:field="*{orderItemForm[__${orderItemDtoStat.index}__].itemBrand}">
+                    <input type="hidden" th:field="*{orderItemForm[__${orderItemDtoStat.index}__].orderPrice}">
                     <div class="form-group">
                         <label class="option" for="brand">브랜드 명 : </label>
-                        <span class="value" id="brand" th:text="*{itemBrand}"> </span>
+                        <span class="value" id="brand" th:text="*{orderItemForm[__${orderItemDtoStat.index}__].itemBrand}" th:field="*{orderItemForm[__${orderItemDtoStat.index}__].itemBrand}"> </span>
                     </div>
 
                     <div class="form-group">
                         <label class="option" for="itemName">상품 명 : </label>
-                        <span class="value" id="itemName" th:text="*{itemName}"></span>
+                        <span class="value" id="itemName" th:text="*{orderItemForm[__${orderItemDtoStat.index}__].itemName}" th:field="*{orderItemForm[__${orderItemDtoStat.index}__].itemName}"></span>
                     </div>
 
                     <div class="form-group">
                         <label for="orderPrice" class="option">주문 가격 : </label>
-                        <span id="orderPrice" class="value" th:text="*{orderPrice}"></span>
+                        <span id="orderPrice" class="value" th:field="*{orderItemForm[__${orderItemDtoStat.index}__].orderPrice}"  th:text="*{orderItemForm[__${orderItemDtoStat.index}__].orderPrice}"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="orderStockQuantity" class="option">최대 주문 가능 수량 : </label>
+                        <span id="orderStockQuantity" class="value" th:text="${itemQuantityList[__${orderItemDtoStat.index}__]}"></span>
                     </div>
 
                     <div class="form-group">
+                        <div class="field-error" th:errors="*{orderItemForm[__${orderItemDtoStat.index}__].quantity}"></div>
                         <label for="quantity" class="option">주문 수량 : </label>
-                        <input type="number" id="quantity" class="value" th:value="*{quantity}"
-                               onchange="changeQuantity(this.value)">
+                        <input type="number" id="quantity"
+                               th:name="${orderItemDtoStat.index}"
+                               th:id="quantity"
+                               th:field="*{orderItemForm[__${orderItemDtoStat.index}__].quantity}"
+                               th:value="*{orderItemForm[__${orderItemDtoStat.index}__].quantity}" onchange="changeQuantity(this)"
+                               min="0">
                     </div>
                     <div class="form-group">
-                        <label th:for="'print-totalPrice'+${orderItemStat.index}" class="option">총 가격 : </label>
-                        <div id="print-totalPrice"></div>
+                        <label th:for="print-totalPrice+${orderItemDtoStat.index}" class="option">총 가격 : </label>
+                        <div class="tp"
+                             th:id="print-totalPrice+${orderItemDtoStat.index}" th:value="*{orderItemForm[__${orderItemDtoStat.index}__].totalPrice}">
+                            [[ ${orderItemDto.totalPrice} ]]
+                        </div>
                     </div>
                     <script th:inline="javascript">
-                        orderPrice[[[${orderItemStat.index}]]] = [[${orderItem.orderPrice}]];
-                        totalPrice[[[${orderItemStat.index}]]] = [[${orderItem.totalPrice}]];
-                        quantity[[[${orderItemStat.index}]]] = [[${orderItem.quantity}]];
                         (function () {
-                            // totalPrice[[[${orderItemStat.index}]]] = [[${orderItem.totalPrice}]]
-                            // document.getElementById("print-totalPrice"+[[${orderItemStat.index}]]).innerText = totalPrice[[[${orderItemStat.index}]]];
-                            realTotalPrice += Number(totalPrice[[[${orderItemStat.index}]]]);
+                            orderPrice[ [[ ${orderItemDtoStat.index} ]] ] =Number( [[ ${orderItemDto.orderPrice} ]] );
+                            quantity[ [[ ${orderItemDtoStat.index} ]] ] = Number( [[ ${orderItemDto.quantity} ]] );
+                            totalPrice[ [[ ${orderItemDtoStat.index} ]] ] =Number(orderPrice[ [[ ${orderItemDtoStat.index} ]] ] * quantity[ [[ ${orderItemDtoStat.index} ]] ]);
+                            realTotalPrice += Number(totalPrice[ [[ ${orderItemDtoStat.index} ]] ]);
+                            document.getElementById("print-totalPrice" + [[ ${orderItemDtoStat.index} ]]).innerText = Number(totalPrice[ [[ ${orderItemDtoStat.index} ]] ]);
+                            maxQuantity[ [[ ${orderItemDtoStat.index} ]] ] = Number( [[ ${itemQuantityList[__${orderItemDtoStat.index}__]} ]] );
                         })();
-                        var changeQuantity = (q) => {
-                            quantity[[[${orderItemStat.index}]]] = q;
-                            realTotalPrice -= Number(totalPrice[[[${orderItemStat.index}]]]);
-                            totalPrice[[[${orderItemStat.index}]]] = q * orderPrice[[[${orderItemStat.index}]]];
-                            realTotalPrice += totalPrice[[[${orderItemStat.index}]]];
-                            let element = document.getElementById("print-totalPrice"+[[${orderItemStat.index}]]);
-                            document.getElementById("realTotalPrice").innerText = realTotalPrice;
-                            element.innerText = totalPrice[[[${orderItemStat.index}]]];
-                        }
+
                     </script>
                 </div>
             </div>
-            <div class="bg-block">
+            <div class="bg-block" th:object="${address}">
                 <div class="form-group">
                     <label class="option" for="city" style="padding-top: 1rem">도시 : </label>
-                    <input class="value" type="text" id="city" style="margin-top: 1rem" th:value="${address.city}">
+                    <input class="value" type="text" id="city" style="margin-top: 1rem" th:field="*{city}">
                 </div>
                 <br>
                 <div class="form-group">
                     <label class="option" for="street">도로 : </label>
-                    <input class="value" type="text" id="street" th:value="${address.street}">
+                    <input class="value" type="text" id="street" th:field="*{street}">
                 </div>
                 <br>
-
                 <div class="form-group">
                     <label class="option" for="zipcode">우편 번호 : </label>
-                    <input class="value" type="text" id="zipcode" th:value="${address.zipcode}">
+                    <input class="value" type="text" id="zipcode" th:field="*{zipcode}">
                 </div>
             </div>
-            <div style="display: flex; justify-content: center;" id="realTotalPrice">123</div>
-            <script th:inline="javascript">
-                document.getElementById("realTotalPrice").innerText = realTotalPrice;
-            </script>
-            <div class="address" th:object="${address}">
-                배달 장소 : <span th:text="|*{city} *{street} *{zipcode}|"></span>
+            <div style="display: flex; justify-content: center;" >
+                <label for="realTotalPrice">총 주문 가격 : </label>
+                <div  id="realTotalPrice"></div>
+                <script th:inline="javascript">
+                    document.getElementById("realTotalPrice").innerText = realTotalPrice;
+                </script>
             </div>
             <button type="submit" class="btn btn-primary sub-btn">Submit</button>
-            <!--            <form action="#" th:action="@{/order/edit/{id}(id=${orderId})}" method="get">-->
-            <!--                <div th:if="${status.name()}=='WAITING'">-->
-            <!--                    <button type="submit" class="btn btn-primary sub-btn">Edit</button>-->
-            <!--                </div>-->
-            <!--            </form>-->
         </form>
     </div>
 </div>

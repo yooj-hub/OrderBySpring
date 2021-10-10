@@ -8,4 +8,6 @@ import java.util.List;
 public interface ItemRepositoryCustom {
     List<Item> findAllByName(ItemSearch search);
     List<Item> findByName(String name);
+
+    List<Item> findByOrderId(Long orderId);
 }

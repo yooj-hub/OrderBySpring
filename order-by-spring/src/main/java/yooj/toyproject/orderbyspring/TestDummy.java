@@ -16,6 +16,7 @@ import yooj.toyproject.orderbyspring.service.OrderItemService;
 import yooj.toyproject.orderbyspring.service.OrderService;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
 
 @Component
@@ -27,6 +28,7 @@ public class TestDummy {
     private final OrderItemService orderItemService;
     private final ItemService itemService;
     private final OrderService orderService;
+    private final EntityManager em;
 
 
     @PostConstruct
@@ -55,16 +57,12 @@ public class TestDummy {
         Order savedOrder3 = orderService.save(order3);
         Order savedOrder4 = orderService.save(order4);
         Order savedOrder5 = orderService.save(order5);
-        OrderItem orderItem = new OrderItem(savedOrder, savedItem.getPrice(), 10, savedItem);
-        OrderItem savedOrderItem = orderItemService.save(orderItem);
-        orderItemService.save(new OrderItem(savedOrder, savedItem2.getPrice(), 5, savedItem2));
-        OrderItem orderItem2 = new OrderItem(savedOrder2, savedItem.getPrice(), 10, savedItem);
-        OrderItem savedOrderItem2 = orderItemService.save(orderItem2);
-        OrderItem orderItem3 = new OrderItem(savedOrder3, savedItem.getPrice(), 10, savedItem);
-        OrderItem savedOrderItem3 = orderItemService.save(orderItem3);
-        orderItemService.save(new OrderItem(savedOrder4,savedItem2.getPrice(),10,savedItem2));
-        orderItemService.save(new OrderItem(savedOrder5,savedItem2.getPrice(),10,savedItem2));
-        orderItemService.save(new OrderItem(savedOrder5, savedItem.getPrice(),5,savedItem));
+        orderItemService.save(orderItemService.makeOrderItem(savedOrder.getId(), savedItem.getPrice(), 10, savedItem.getId()));
+        orderItemService.save(orderItemService.makeOrderItem(savedOrder.getId(), savedItem2.getPrice(), 5, savedItem2.getId()));
+        orderItemService.save(orderItemService.makeOrderItem(savedOrder3.getId(), savedItem.getPrice(), 10, savedItem.getId()));
+        orderItemService.save(orderItemService.makeOrderItem(savedOrder4.getId(),savedItem2.getPrice(),10,savedItem2.getId()));
+        orderItemService.save(orderItemService.makeOrderItem(savedOrder5.getId(), savedItem2.getPrice(), 10, savedItem2.getId()));
+        orderItemService.save(orderItemService.makeOrderItem(savedOrder5.getId(), savedItem.getPrice(),5,savedItem.getId()));
         orderItemService.cancelAll(savedOrder2.getId());
 
     }

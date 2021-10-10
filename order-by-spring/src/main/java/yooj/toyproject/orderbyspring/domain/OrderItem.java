@@ -4,6 +4,7 @@ package yooj.toyproject.orderbyspring.domain;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import yooj.toyproject.orderbyspring.domain.item.Item;
 
 import javax.persistence.*;
@@ -38,6 +39,15 @@ public class OrderItem {
         this.quantity = quantity;
         this.item = item;
         this.orderPrice = orderPrice;
-        item.changeStockQuantity(quantity);
+        item.swapQuantity(item.getStockQuantity()-quantity);
     }
+
+    public void changeOrderQuantity(int quantity) {
+        this.quantity=quantity;
+    }
+//    public void changeQuantity(int quantity){
+//        item.changeStockQuantity(quantity-this.quantity);
+//        this.quantity=quantity;
+//        this.totalPrice=quantity*this.orderPrice;
+//    }
 }

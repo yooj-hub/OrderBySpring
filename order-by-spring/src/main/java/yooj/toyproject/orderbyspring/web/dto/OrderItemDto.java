@@ -4,10 +4,11 @@ import com.querydsl.core.annotations.QueryProjection;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
-
 @NoArgsConstructor
+@ToString
 public class OrderItemDto {
     private Long id;
     private int totalPrice;

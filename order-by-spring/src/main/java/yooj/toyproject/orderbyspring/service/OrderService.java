@@ -1,6 +1,8 @@
 package yooj.toyproject.orderbyspring.service;
 
+import yooj.toyproject.orderbyspring.domain.Address;
 import yooj.toyproject.orderbyspring.domain.Order;
+import yooj.toyproject.orderbyspring.domain.item.Item;
 import yooj.toyproject.orderbyspring.web.dto.OrderListDto;
 
 import java.util.List;
@@ -21,6 +23,9 @@ public interface OrderService {
     List<OrderListDto> findOrderListDto(Long memberId);
 
     boolean checkMemberId(Long orderId,Long memberId);
+
+    void changeAddress(Long orderId, Address address);
+
 
 
 }

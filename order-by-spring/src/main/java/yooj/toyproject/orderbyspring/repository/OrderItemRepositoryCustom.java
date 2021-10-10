@@ -11,4 +11,6 @@ public interface OrderItemRepositoryCustom {
     Long cancelAll(Order order);
 
     List<OrderItemDto> getOrderItemDto(Long orderId);
+
+    List<OrderItem> findByOrderIdWithItem(Long orderId);
 }

@@ -59,7 +59,7 @@ class ItemServiceImplTest {
         //given
         Instrument ins1 = new Instrument("ins1", 1000, 1000, "a", LocalDateTime.now());
         Item savedIns1 = itemService.save(ins1);
-        ins1.changeStockQuantity(100);
+        ins1.swapQuantity(ins1.getStockQuantity()-100);
         em.flush();
         em.clear();
         //when
