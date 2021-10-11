@@ -114,7 +114,7 @@
 
 
 
-![DB Table](./DB Table.png)
+![DB Table](./DBTable.png)
 
 
 
