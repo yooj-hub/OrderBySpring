@@ -118,5 +118,9 @@
 
 
 
-![DB Table](/Users/yujeongmin/Desktop/github/spring project/orderBySpring/order-by-spring/DB Table.png)
+![DB Table](./DB Table.png)
+
+
+
+
 
