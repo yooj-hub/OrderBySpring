@@ -106,11 +106,7 @@
 
 ## Entity Graph
 
-
-
-
-
-![EntityGraph](/Users/yujeongmin/Desktop/github/spring project/orderBySpring/order-by-spring/EntityGraph.png)
+![EntityGraph](./EntityGraph.png)
 
 
 
