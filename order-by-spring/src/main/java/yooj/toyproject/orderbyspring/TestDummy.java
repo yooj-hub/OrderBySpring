@@ -17,6 +17,7 @@ import yooj.toyproject.orderbyspring.service.OrderService;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Component
@@ -42,13 +43,14 @@ public class TestDummy {
                 .address(address)
                 .build();
         memberService.save(member);
-        Instrument item1 = new Instrument("item1", 1000, 100, "sang", LocalDateTime.now());
-        Instrument item2 = new Instrument("item2", 2000, 100, "dol", LocalDateTime.now());
+        Instrument item1 = new Instrument("item1", 1000, 100, "testBrand1", LocalDate.now());
+        Instrument item2 = new Instrument("item2", 2000, 100, "testBrand2", LocalDate.now());
         Item savedItem = itemService.save(item1);
         Item savedItem2 = itemService.save(item2);
         Order order = new Order(member, OrderStatus.ACCEPTED);
         Order order2 = new Order(member, OrderStatus.ACCEPTED);
         Order order3 = new Order(member, OrderStatus.COMPLETED);
+
         Order order4 = new Order(member, OrderStatus.ONGOING);
         Order order5 = new Order(member, OrderStatus.WAITING);
         Order order6 = new Order(member, OrderStatus.WAITING);

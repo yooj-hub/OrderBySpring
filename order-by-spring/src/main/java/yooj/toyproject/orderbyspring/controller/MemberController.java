@@ -31,7 +31,6 @@ public class MemberController {
         model.addAttribute("form", new MemberJoinForm());
         return "/member/joinForm";
     }
-
     @PostMapping("/join")
     public String join(@Validated @ModelAttribute(name = "form") MemberJoinForm form, BindingResult bindingResult) {
         if (memberService.findByLoginId(form.getLoginId()).isPresent()) {

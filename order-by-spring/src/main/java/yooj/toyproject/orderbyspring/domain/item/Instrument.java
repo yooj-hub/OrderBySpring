@@ -2,12 +2,11 @@ package yooj.toyproject.orderbyspring.domain.item;
 
 
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -15,19 +14,19 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Instrument extends Item {
     private String brand;
-    private LocalDateTime ManufacturingDate;
+    private LocalDate manufacturingDate;
 
 
-    public Instrument(String name, int price, int stockQuantity, String brand, LocalDateTime manufacturingDate) {
+    public Instrument(String name, int price, int stockQuantity, String brand, LocalDate manufacturingDate) {
         initItem(name, price, stockQuantity);
         this.brand = brand;
-        this.ManufacturingDate = manufacturingDate;
+        this.manufacturingDate = manufacturingDate;
     }
 
-    public void updateInstrument(String name, int price, int stockQuantity, String brand, LocalDateTime manufacturingDate) {
+    public void updateInstrument(String name, int price, int stockQuantity, String brand, LocalDate manufacturingDate) {
         initItem(name, price, stockQuantity);
         this.brand = brand;
-        this.ManufacturingDate = manufacturingDate;
+        this.manufacturingDate = manufacturingDate;
     }
 
 }

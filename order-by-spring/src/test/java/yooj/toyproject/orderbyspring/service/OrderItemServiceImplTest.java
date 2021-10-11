@@ -11,6 +11,7 @@ import yooj.toyproject.orderbyspring.domain.item.Item;
 import yooj.toyproject.orderbyspring.repository.MemberRepository;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -43,7 +44,7 @@ class OrderItemServiceImplTest {
     @Test
     void 주문_아이템_생성_및_주문_총_가격_조회() throws Exception {
         //given
-        Instrument item1 = new Instrument("item1", 1000, 100, "sang", LocalDateTime.now());
+        Instrument item1 = new Instrument("item1", 1000, 100, "sang", LocalDate.now());
         Item savedItem = itemService.save(item1);
 
         Address address = new Address("seoul", "gwan", "12340");
@@ -71,7 +72,7 @@ class OrderItemServiceImplTest {
     void 단일조회() throws Exception {
         //given
 
-        Instrument item1 = new Instrument("item1", 1000, 100, "sang", LocalDateTime.now());
+        Instrument item1 = new Instrument("item1", 1000, 100, "sang", LocalDate.now());
         Item savedItem = itemService.save(item1);
 
         Address address = new Address("seoul", "gwan", "12340");
@@ -94,7 +95,7 @@ class OrderItemServiceImplTest {
     @Test
     void 주문으로_조회() throws Exception {
         //given
-        Instrument item1 = new Instrument("item1", 1000, 100, "sang", LocalDateTime.now());
+        Instrument item1 = new Instrument("item1", 1000, 100, "sang", LocalDate.now());
         Item savedItem = itemService.save(item1);
 
         Address address = new Address("seoul", "gwan", "12340");
@@ -136,7 +137,7 @@ class OrderItemServiceImplTest {
     @Test
     void 단일_삭제() throws Exception {
         //given
-        Instrument item1 = new Instrument("item1", 1000, 100, "sang", LocalDateTime.now());
+        Instrument item1 = new Instrument("item1", 1000, 100, "sang", LocalDate.now());
         Item savedItem = itemService.save(item1);
 
         Address address = new Address("seoul", "gwan", "12340");
@@ -161,7 +162,7 @@ class OrderItemServiceImplTest {
     @Test
     void 전체_삭제() throws Exception {
         //given
-        Instrument item1 = new Instrument("item1", 1000, 100, "sang", LocalDateTime.now());
+        Instrument item1 = new Instrument("item1", 1000, 100, "sang", LocalDate.now());
         Item savedItem = itemService.save(item1);
 
         Address address = new Address("seoul", "gwan", "12340");

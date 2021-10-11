@@ -4,10 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.ManyToAny;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import yooj.toyproject.orderbyspring.domain.item.Instrument;
 import yooj.toyproject.orderbyspring.domain.item.Item;
 import yooj.toyproject.orderbyspring.repository.ItemRepository;
+import yooj.toyproject.orderbyspring.web.dto.InstrumentDto;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -62,6 +66,21 @@ public class ItemServiceImpl implements ItemService {
     @Transactional
     public void updateStockQuantity(Item item, int quantity) {
         findById(item.getId()).swapQuantity(quantity);
+    }
+
+    @Override
+    public List<InstrumentDto> findAllInstrumentDto() {
+        return itemRepository.findAllInstrumentDto();
+    }
+
+    @Override
+    @Transactional
+    public void instrumentChange(Long itemId, String name, int price, int stockQuantity, String brand, LocalDate manufacturingDate) {
+        Instrument instrument = (Instrument) itemRepository.findById(itemId).orElse(null);
+        if(instrument==null){
+            return;
+        }
+        instrument.updateInstrument(name,price,stockQuantity,brand,manufacturingDate);
     }
 
 

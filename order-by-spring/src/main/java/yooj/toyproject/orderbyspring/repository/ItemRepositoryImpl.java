@@ -5,8 +5,10 @@ import lombok.RequiredArgsConstructor;
 import yooj.toyproject.orderbyspring.domain.OrderItem;
 import yooj.toyproject.orderbyspring.domain.QOrderItem;
 import yooj.toyproject.orderbyspring.domain.item.Item;
+import yooj.toyproject.orderbyspring.domain.item.QInstrument;
 import yooj.toyproject.orderbyspring.domain.item.QItem;
 import yooj.toyproject.orderbyspring.service.ItemSearch;
+import yooj.toyproject.orderbyspring.web.dto.InstrumentDto;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.*;
 import static yooj.toyproject.orderbyspring.domain.QOrderItem.orderItem;
+import static yooj.toyproject.orderbyspring.domain.item.QInstrument.instrument;
 import static yooj.toyproject.orderbyspring.domain.item.QItem.*;
 
 
@@ -51,6 +54,16 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
                 .fetch()
                 .stream()
                 .map(OrderItem::getItem).collect(toList());
+    }
+
+    @Override
+    public List<InstrumentDto> findAllInstrumentDto(){
+        return queryFactory
+                .selectFrom(instrument)
+                .fetch()
+                .stream()
+                .map(i -> new InstrumentDto(i.getId(),i.getName(),i.getPrice(),i.getStockQuantity(),i.getBrand(),i.getManufacturingDate()))
+                .collect(toList());
     }
 
 }

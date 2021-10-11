@@ -8,6 +8,7 @@ import yooj.toyproject.orderbyspring.domain.item.Instrument;
 import yooj.toyproject.orderbyspring.domain.item.Item;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -26,8 +27,8 @@ class ItemServiceImplTest {
     @Test
     void 아이템저장() throws Exception {
         //given
-        Instrument ins1 = new Instrument("ins1", 1000, 1000, "a", LocalDateTime.now());
-        Instrument ins2 = new Instrument("ins2", 2000, 2000, "a", LocalDateTime.now());
+        Instrument ins1 = new Instrument("ins1", 1000, 1000, "a", LocalDate.now());
+        Instrument ins2 = new Instrument("ins2", 2000, 2000, "a", LocalDate.now());
         //when
         Item savedIns1 = itemService.save(ins1);
         //then
@@ -37,8 +38,8 @@ class ItemServiceImplTest {
     @Test
     void 단일조회() throws Exception {
         //given
-        Instrument ins1 = new Instrument("ins1", 1000, 1000, "a", LocalDateTime.now());
-        Instrument ins2 = new Instrument("ins2", 2000, 2000, "a", LocalDateTime.now());
+        Instrument ins1 = new Instrument("ins1", 1000, 1000, "a", LocalDate.now());
+        Instrument ins2 = new Instrument("ins2", 2000, 2000, "a", LocalDate.now());
         Item savedIns1 = itemService.save(ins1);
         Item savedIns2 = itemService.save(ins2);
 
@@ -57,7 +58,7 @@ class ItemServiceImplTest {
     @Test
     void 수량_변경() throws Exception {
         //given
-        Instrument ins1 = new Instrument("ins1", 1000, 1000, "a", LocalDateTime.now());
+        Instrument ins1 = new Instrument("ins1", 1000, 1000, "a", LocalDate.now());
         Item savedIns1 = itemService.save(ins1);
         ins1.swapQuantity(ins1.getStockQuantity()-100);
         em.flush();
@@ -72,7 +73,7 @@ class ItemServiceImplTest {
     @Test
     void 아이템제거() throws Exception {
         //given
-        Instrument ins1 = new Instrument("ins1", 1000, 1000, "a", LocalDateTime.now());
+        Instrument ins1 = new Instrument("ins1", 1000, 1000, "a", LocalDate.now());
         Item savedIns1 = itemService.save(ins1);
         em.flush();
         em.clear();
@@ -88,10 +89,10 @@ class ItemServiceImplTest {
     @Test
     void 아이템이름포함조회() throws Exception {
         //given
-        Instrument ins1 = new Instrument("aa1", 1000, 1000, "a", LocalDateTime.now());
-        Instrument ins2 = new Instrument("aa2", 2000, 2000, "a", LocalDateTime.now());
-        Instrument ins3 = new Instrument("bb1", 1000, 1000, "a", LocalDateTime.now());
-        Instrument ins4 = new Instrument("bb2", 2000, 2000, "a", LocalDateTime.now());
+        Instrument ins1 = new Instrument("aa1", 1000, 1000, "a", LocalDate.now());
+        Instrument ins2 = new Instrument("aa2", 2000, 2000, "a", LocalDate.now());
+        Instrument ins3 = new Instrument("bb1", 1000, 1000, "a", LocalDate.now());
+        Instrument ins4 = new Instrument("bb2", 2000, 2000, "a", LocalDate.now());
         itemService.save(ins1);
         itemService.save(ins2);
         itemService.save(ins3);

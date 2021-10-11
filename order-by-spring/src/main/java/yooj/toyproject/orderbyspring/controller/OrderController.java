@@ -11,17 +11,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import yooj.toyproject.orderbyspring.domain.Address;
-import yooj.toyproject.orderbyspring.domain.Order;
-import yooj.toyproject.orderbyspring.domain.OrderItem;
+import yooj.toyproject.orderbyspring.domain.*;
 import yooj.toyproject.orderbyspring.domain.item.Item;
-import yooj.toyproject.orderbyspring.service.ItemService;
-import yooj.toyproject.orderbyspring.service.OrderItemService;
-import yooj.toyproject.orderbyspring.service.OrderService;
+import yooj.toyproject.orderbyspring.service.*;
 import yooj.toyproject.orderbyspring.web.argumentresolver.Login;
-import yooj.toyproject.orderbyspring.web.dto.OrderItemCreationDto;
-import yooj.toyproject.orderbyspring.web.dto.OrderItemDto;
-import yooj.toyproject.orderbyspring.web.dto.OrderListDto;
+import yooj.toyproject.orderbyspring.web.dto.*;
 import yooj.toyproject.orderbyspring.web.login.LoginMemberDto;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +30,7 @@ public class OrderController {
     private final OrderService orderService;
     private final OrderItemService orderItemService;
     private final ItemService itemService;
+    private final MemberService memberService;
 
 
     @GetMapping("/order/orderList")
@@ -118,5 +113,46 @@ public class OrderController {
         orderService.changeAddress(orderId,address);
         return "redirect:/order/info/" + orderId;
     }
+    @GetMapping("/order")
+    public String goItemSelectList(){
+        return "/item/itemSelectHome";
+    }
+    @PostMapping("/order")
+    public String instrumentOrder(@Login LoginMemberDto loginMember,@ModelAttribute("form")OrderQuantityCreationForm form,
+                                  BindingResult bindingResult,
+                                  Model model,
+                                  @ModelAttribute("itemSearch") ItemSearch itemSearch,
+                                  RedirectAttributes redirectAttributes,
+                                  @ModelAttribute("address") Address address){
+        List<OrderPriceAndQuantity> orderPriceAndQuantityList = form.getOrderPriceAndQuantityList();
+        boolean isError=false;
+        for(int i=0;i<orderPriceAndQuantityList.size();i++){
+            Long itemId = orderPriceAndQuantityList.get(i).getItemId();
+            Item item = itemService.findById(itemId);
+            if(item.getStockQuantity()<orderPriceAndQuantityList.get(i).getOrderQuantity()){
+                redirectAttributes.addFlashAttribute("quantityError","수량이 부족합니다.");
+                isError=true;
+            }
+        }
+        if(bindingResult.hasErrors() || isError){
+            return "redirect:/item/instrument/itemList";
+        }
+        Member member = memberService.findById(loginMember.getId());
+        Order savedOrder = orderService.save(new Order(member, OrderStatus.WAITING, address));
+        for (OrderPriceAndQuantity orderPriceAndQuantity : orderPriceAndQuantityList) {
+            int quantity = orderPriceAndQuantity.getOrderQuantity();
+            if(quantity==0){
+                continue;
+            }
+            int price = orderPriceAndQuantity.getPrice();
+            Long itemId = orderPriceAndQuantity.getItemId();
+            orderItemService.save(orderItemService.makeOrderItem(savedOrder.getId(), price, quantity, itemId));
+        }
+
+        return "redirect:/";
+
+    }
+
 
 }
+

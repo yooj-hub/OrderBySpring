@@ -18,6 +18,7 @@ import yooj.toyproject.orderbyspring.web.dto.OrderListDto;
 import yooj.toyproject.orderbyspring.web.dto.OrderListQueryDto;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -63,7 +64,7 @@ class OrderRepositoryImplTest {
                 .address(address)
                 .build();
         Member savedMember = memberService.save(member);
-        Instrument item1 = new Instrument("item1", 1000, 100, "sang", LocalDateTime.now());
+        Instrument item1 = new Instrument("item1", 1000, 100, "sang", LocalDate.now());
         Item savedItem = itemService.save(item1);
         Order order = new Order(member, OrderStatus.ACCEPTED);
         Order savedOrder = orderService.save(order);
@@ -94,7 +95,7 @@ class OrderRepositoryImplTest {
                 .address(address)
                 .build();
         Member savedMember = memberService.save(member);
-        Instrument item1 = new Instrument("item1", 1000, 100, "sang", LocalDateTime.now());
+        Instrument item1 = new Instrument("item1", 1000, 100, "sang", LocalDate.now());
         Item savedItem = itemService.save(item1);
         Order order = new Order(member, OrderStatus.ACCEPTED);
         Order savedOrder = orderService.save(order);

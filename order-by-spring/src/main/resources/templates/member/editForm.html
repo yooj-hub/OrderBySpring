@@ -2,11 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title><!DOCTYPE html>
-        <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-        <head>
-        <meta charset="UTF-8">
-        <title>회원 가입</title>
+    <title>
+        Member Information Edit</title>
     <div th:replace="/layout/header :: header"></div>
 </head>
 <style>
@@ -45,8 +42,11 @@
     }
 </style>
 <body>
+<div th:replace="/layout/navVar::navVar"></div>
 <div class="box">
     <div class="form-background">
+        <h1 style="text-align: center">Order By Spring<br></h1>
+        <h1 style="text-align: center;border-bottom: dodgerblue solid;">Member Information Edit</h1>
         <form action="#" th:action th:object="${form}" method="post">
             <div th:if="${#fields.hasGlobalErrors()}">
                 <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
@@ -89,9 +89,7 @@
                 <label for="zipcode">Zipcode</label>
                 <input type="text" id="zipcode" th:field="*{zipcode}" th:errorclass="field-error"
                        placeholder="Enter Zipcode">
-
             </div>
-
             <button type="submit" class="btn btn-primary sub-btn">Submit</button>
         </form>
     </div>

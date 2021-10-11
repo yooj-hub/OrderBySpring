@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Instrument Edit Form</title>
+    <div th:replace="/layout/header :: header"></div>
+</head>
+<style>
+    .field-error {
+        border-color: red;
+        color: red;
+    }
+
+    .box {
+        margin-top: 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /*float: contour;*/
+    }
+
+    .form-background {
+        background-color: #e7e7e7;
+        padding: 20px;
+        border-radius: 10%;
+    }
+
+    .sub-btn {
+        margin-top: 1rem;
+        display: flex;
+        float: right;
+    }
+
+    .form-group {
+        margin-top: 1rem;
+    }
+
+    input {
+        display: flex;
+        float: right;
+    }
+</style>
+<body>
+<div th:replace="/layout/navVar::navVar"></div>
+<div class="box">
+    <div class="form-background">
+        <h1 style="text-align: center">Order By Spring<br></h1>
+        <h1 style="text-align: center;border-bottom: dodgerblue solid;">Instrument Edit Form</h1>
+        <form action="#" th:action th:object="${form}" method="post">
+            <div th:if="${#fields.hasGlobalErrors()}">
+                <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+            </div>
+            <input type="hidden" th:field="*{id}">
+            <div class="form-group">
+                <div class="field-error" th:errors="*{name}"></div>
+                <label for="name">name</label>
+                <input type="text" id="name" th:field="*{name}" th:errorclass="field-error"
+                       placeholder="Enter name">
+            </div>
+            <div class="form-group">
+                <div class="field-error" th:errors="*{price}"></div>
+                <label for="price">price</label>
+                <input type="number" id="price" th:field="*{price}" th:errorclass="field-error"
+                       placeholder="Enter price">
+            </div>
+            <div class="form-group">
+                <div class="field-error" th:errors="*{stockQuantity}"></div>
+                <label for="stockQuantity">stockQuantity</label>
+                <input type="number" id="stockQuantity" th:field="*{stockQuantity}" th:errorclass="field-error"
+                       placeholder="Enter stockQuantity">
+            </div>
+            <div class="form-group">
+                <div class="field-error" th:errors="*{brand}"></div>
+                <label for="brand">brand</label>
+                <input type="text" id="brand" th:field="*{brand}" th:errorclass="field-error"
+                       placeholder="Enter brand">
+            </div>
+            <div class="form-group">
+                <div class="field-error" th:errors="*{manufacturingDate}"></div>
+                <label for="manufacturingDate">Street</label>
+                <input type="date" id="manufacturingDate" th:field="*{manufacturingDate}" th:errorclass="field-error"
+                       placeholder="Enter manufacturingDate">
+            </div>
+            <button type="submit" class="btn btn-primary sub-btn">Submit</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+
+</html>

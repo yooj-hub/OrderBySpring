@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Item Edit Select</title>
+  <div th:replace="/layout/header :: header"></div>
+</head>
+<style>
+  button, input[type="submit"], input[type="reset"] {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+  }
+
+  .menus {
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    font-size: 2rem;
+  }
+
+  .logout {
+    color: royalblue;
+  }
+
+  a {
+    color: royalblue;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: red;
+    font-size: 2.1rem;
+  }
+
+  .menu {
+    text-align: center;
+    padding: 0.1rem;
+    margin-bottom: 1rem;
+    background-color: dodgerblue;
+    border-radius: 10%;
+    min-width: 16rem;
+  }
+
+  .menu:hover {
+    background-color: #0e80ef;
+  }
+
+  .form-background {
+    background-color: #e7e7e7;
+    padding: 20px;
+    border-radius: 10%;
+  }
+
+  .subject {
+    text-align: center;
+  }
+
+  /*    display: flex;*/
+  /*    flex-direction: column;*/
+  /*}*/
+
+  .box {
+    margin-top: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .menu-name {
+    color: white;
+  }
+
+  .menu:hover {
+    background-color: #0A70df;
+  }
+</style>
+<body>
+<div th:replace="/layout/navVar::navVar"></div>
+<div class="box">
+  <div class="form-background">
+    <div class="subject">
+      <h1 style="text-align: center">Order By Spring<br></h1>
+      <h1 style="text-align: center;border-bottom: dodgerblue solid;">Select Kind of Item</h1>
+    </div>
+    <div class="menus">
+      <div class="locate">
+        <div class="menu">
+          <a th:href="@{/item/edit/instrument}">
+            <div class="menu-name">Instrument</div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

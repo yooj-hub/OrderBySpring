@@ -13,11 +13,14 @@ import yooj.toyproject.orderbyspring.service.ItemService;
 import yooj.toyproject.orderbyspring.service.MemberService;
 import yooj.toyproject.orderbyspring.service.OrderItemService;
 import yooj.toyproject.orderbyspring.service.OrderService;
+import yooj.toyproject.orderbyspring.web.dto.InstrumentDto;
 import yooj.toyproject.orderbyspring.web.dto.OrderItemDto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -47,7 +50,7 @@ class OrderItemRepositoryImplTest {
                 .address(address)
                 .build();
         memberService.save(member);
-        Instrument item1 = new Instrument("item1", 1000, 100, "sang", LocalDateTime.now());
+        Instrument item1 = new Instrument("item1", 1000, 100, "sang", LocalDate.now());
         Item savedItem = itemService.save(item1);
         Order order = new Order(member, OrderStatus.ACCEPTED);
         Order savedOrder = orderService.save(order);
@@ -71,8 +74,8 @@ class OrderItemRepositoryImplTest {
                 .address(address)
                 .build();
         memberService.save(member);
-        Instrument item1 = new Instrument("item1", 1000, 100, "sang", LocalDateTime.now());
-        Instrument item2 = new Instrument("item2", 1000, 100, "sang", LocalDateTime.now());
+        Instrument item1 = new Instrument("item1", 1000, 100, "sang", LocalDate.now());
+        Instrument item2 = new Instrument("item2", 1000, 100, "sang", LocalDate.now());
         Item savedItem1 = itemService.save(item1);
         Item savedItem2 = itemService.save(item2);
         Order order = new Order(member, OrderStatus.ACCEPTED);
@@ -88,8 +91,24 @@ class OrderItemRepositoryImplTest {
         List<Item> itemList = itemRepository.findByOrderId(savedOrder.getId());
 
         //then
-        Assertions.assertThat(itemList.get(0).getName()).isEqualTo("item1");
-        Assertions.assertThat(itemList.get(1).getName()).isEqualTo("item2");
+        assertThat(itemList.get(0).getName()).isEqualTo("item1");
+        assertThat(itemList.get(1).getName()).isEqualTo("item2");
+    }
+
+    @Test
+    void findAllInstrumentDto() throws Exception {
+        //given
+        Instrument item1 = new Instrument("item1", 1000, 100, "sang", LocalDate.now());
+        Instrument item2 = new Instrument("item2", 1000, 100, "sang", LocalDate.now());
+        Item savedItem1 = itemService.save(item1);
+        Item savedItem2 = itemService.save(item2);
+
+        //when
+        List<InstrumentDto> allInstrumentDto = itemRepository.findAllInstrumentDto();
+
+        //then
+        assertThat(allInstrumentDto.get(0).getName()).isEqualTo("item1");
+        assertThat(allInstrumentDto.get(1).getName()).isEqualTo("item2");
     }
 
 }

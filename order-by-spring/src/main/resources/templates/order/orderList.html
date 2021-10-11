@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>LoginForm</title>
+    <title>Order List</title>
     <div th:replace="/layout/header :: header"></div>
 </head>
 <style>
@@ -90,8 +90,11 @@
     }
 </style>
 <body>
+<div th:replace="/layout/navVar::navVar"></div>
 <dvi class="box">
     <div class="form-background">
+        <h1 style="text-align: center">Order By Spring<br></h1>
+        <h1 style="text-align: center;border-bottom: dodgerblue solid;">Order List</h1>
         <div th:if="${authorization}!=null">
             <div  class="field-error" style="text-align: center; margin-bottom: 1rem">
                 <span th:text="${authorization}"></span>
