@@ -23,6 +23,7 @@ public class InstrumentAddForm {
     private Integer stockQuantity;
     @NotEmpty
     private String brand;
+    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate manufacturingDate;
 }

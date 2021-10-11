@@ -4,13 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import yooj.toyproject.orderbyspring.BaseEntity;
+import yooj.toyproject.orderbyspring.domain.OrderItem;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public abstract class Item extends BaseEntity {
+public abstract class Item extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "item_id")
@@ -29,3 +30,4 @@ public abstract class Item extends BaseEntity {
         this.stockQuantity=stockQuantity;
     };
 }
+
