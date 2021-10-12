@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Order Information</title>
-    <div th:replace="/layout/header :: header"></div>
-</head>
+<head th:replace="/layout/header :: header('Order Information')"></head>
 <style>
     .field-error {
         border-color: red;
@@ -62,6 +58,20 @@
     .status {
         text-align: center;
         margin-bottom: 1rem;
+    }
+    body {
+        font-family: "Nanum Gothic", serif;
+    }
+
+    .home-button {
+        margin-left: 1rem;
+        color: dodgerblue;
+        font-size: 2rem;
+        margin-top: 1rem;
+    }
+
+    .home-button:hover {
+        filter: brightness(120%);
     }
 
 </style>

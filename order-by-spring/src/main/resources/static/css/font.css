@@ -1,4 +1,14 @@
+body {
+    font-family: "Nanum Gothic", serif;
+}
 
-body{
-    font-family: Nanum+Gothic;
+.home-button {
+    margin-left: 1rem;
+    color: dodgerblue;
+    font-size: 2rem;
+    margin-top: 1rem;
+}
+
+.home-button:hover {
+    filter: brightness(120%);
 }

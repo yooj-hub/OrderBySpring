@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-    <div th:replace="/layout/header :: header"></div>
-</head>
+<head th:replace="/layout/header :: header('Login Form')"></head>
 <style>
     .field-error {
         border-color: red;
@@ -30,6 +26,20 @@
     input{
         display: flex;
         float: right;
+    }
+    body {
+        font-family: "Nanum Gothic", serif;
+    }
+
+    .home-button {
+        margin-left: 1rem;
+        color: dodgerblue;
+        font-size: 2rem;
+        margin-top: 1rem;
+    }
+
+    .home-button:hover {
+        filter: brightness(120%);
     }
 </style>
 <body>

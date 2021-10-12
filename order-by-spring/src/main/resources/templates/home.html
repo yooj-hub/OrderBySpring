@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-    <div th:replace="/layout/header :: header"></div>
-</head>
+<head th:replace="/layout/header :: header('Home')"></head>
+
 <style>
     .menus {
         padding: 2rem;
@@ -13,6 +10,7 @@
         font-size: 1.5rem;
 
     }
+
     a {
         text-decoration: none;
     }
@@ -25,50 +23,73 @@
     .menu {
         text-align: center;
         margin-bottom: 1rem;
-        background-color:dodgerblue;
+        background-color: dodgerblue;
         padding: 0.8rem;
         border-radius: 10%;
     }
-    .form-background{
+
+    .form-background {
         background-color: #e7e7e7;
         padding: 20px;
         border-radius: 10%;
     }
+
     .box {
         margin-top: 3rem;
         display: flex;
         align-items: center;
         justify-content: center;
     }
+
     .subject {
         text-align: center;
     }
-    .menu-name{
+
+    .menu-name {
         color: white;
     }
-    .menu:hover{
+
+    .menu:hover {
         background-color: #0A70df;
+    }
+    body {
+        font-family: "Nanum Gothic", serif;
+    }
+
+    .home-button {
+        margin-left: 1rem;
+        color: dodgerblue;
+        font-size: 2rem;
+        margin-top: 1rem;
+    }
+
+    .home-button:hover {
+        filter: brightness(120%);
     }
 </style>
 <body>
 <div th:replace="/layout/navVar::navVar"></div>
 <div class="box">
-<div class="form-background">
-    <div class="subject">
-        <h1 style="text-align: center">Order By Spring<br></h1>
-        <h1 style="text-align: center;border-bottom: dodgerblue solid;">Home</h1>
-    </div>
-    <div class="menus">
-        <div class="locate">
-            <div class="menu">
-                <a th:href="@{/login}"><div class="menu-name">로그인</div></a>
-            </div>
-            <div class="menu">
-                <a th:href="@{/join}"><div class="menu-name">회원 가입</div></a>
+    <div class="form-background">
+        <div class="subject">
+            <h1 style="text-align: center">Order By Spring<br></h1>
+            <h1 style="text-align: center;border-bottom: dodgerblue solid;">Home</h1>
+        </div>
+        <div class="menus">
+            <div class="locate">
+                <div class="menu">
+                    <a th:href="@{/login}">
+                        <div class="menu-name">로그인</div>
+                    </a>
+                </div>
+                <div class="menu">
+                    <a th:href="@{/join}">
+                        <div class="menu-name">회원 가입</div>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 </body>
 </html>

@@ -1,5 +1,6 @@
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<div th:fragment="header">
+<head th:fragment="header(title)">
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
           integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -7,24 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
           integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-    <style>
-        body {
-            font-family: "Nanum Gothic", serif;
-        }
+</head>
 
-        .home-button {
-            margin-left: 1rem;
-            color: dodgerblue;
-            font-size: 2rem;
-            margin-top: 1rem;
-        }
-
-        .home-button:hover {
-            filter: brightness(120%);
-        }
-
-    </style>
-</div>
-</html>
 
 

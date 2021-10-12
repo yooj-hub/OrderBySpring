@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Instrument Add Form</title>
-    <div th:replace="/layout/header :: header"></div>
-</head>
+<head th:replace="/layout/header :: header('Instrument Add Form')"></head>
 <style>
     .field-error {
         border-color: red;
@@ -37,6 +33,7 @@
         display: flex;
         float: right;
     }
+
 </style>
 <body>
 <div th:replace="/layout/navVar::navVar"></div>

@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Instrument List</title>
-    <div th:replace="/layout/header :: header"></div>
-</head>
+<head th:replace="/layout/header :: header('Instrument List')"></head>
 <style>
     button, input[type="submit"], input[type="reset"] {
         background: none;
@@ -94,15 +90,31 @@
     .field-error {
         color: red;
     }
-    .bg-block{
+
+    .bg-block {
         background-color: white;
         padding-bottom: 2rem;
         margin-bottom: 1rem;
     }
-    #street,#zipcode,#city
-    {
+
+    #street, #zipcode, #city {
         display: flex;
         float: right;
+    }
+
+    body {
+        font-family: "Nanum Gothic", serif;
+    }
+
+    .home-button {
+        margin-left: 1rem;
+        color: dodgerblue;
+        font-size: 2rem;
+        margin-top: 1rem;
+    }
+
+    .home-button:hover {
+        filter: brightness(120%);
     }
 </style>
 <body>
@@ -187,7 +199,7 @@
                 </div>
             </div>
             <div style="text-align: center">
-            <button type="submit" class="btn btn-primary sub-btn">Submit</button>
+                <button type="submit" class="btn btn-primary sub-btn">Submit</button>
             </div>
         </form>
     </div>
