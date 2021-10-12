@@ -25,26 +25,26 @@ public class LoginController {
         LoginMemberDto loginMember = loginService.login(form.getLoginId(), form.getPassword());
         log.info("{}",bindingResult);
         if(bindingResult.hasErrors()){
-            return "/login/loginForm";
+            return "login/loginForm";
         }
         if (loginMember == null) {
             bindingResult.reject("loginFail","아이디 또는 비밀번호가 맞지 않습니다.");
-            return "/login/loginForm";
+            return "login/loginForm";
         }
 
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
-        return "redirect:/";
+        return "redirect:";
 
     }
     @GetMapping("login")
     public String homeLogin(@Login LoginMemberDto loginMember, HttpServletRequest request, Model model) {
         if (loginMember == null) {
             model.addAttribute("form", new LoginForm());
-            return "/login/loginForm";
+            return "login/loginForm";
         }
         model.addAttribute("member", loginMember);
-        return "/";
+        return "";
     }
 
     @PostMapping("logout")
@@ -53,7 +53,7 @@ public class LoginController {
         if (session != null) {
             session.invalidate();
         }
-        return "redirect:/";
+        return "redirect:";
 
     }
 
