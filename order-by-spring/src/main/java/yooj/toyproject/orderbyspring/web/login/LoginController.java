@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
 public class LoginController {
     private final LoginService loginService;
 
-    @PostMapping("/login")
+    @PostMapping("login")
     public String login(@Validated @ModelAttribute(name = "form") LoginForm form, BindingResult bindingResult, HttpServletRequest request) {
         LoginMemberDto loginMember = loginService.login(form.getLoginId(), form.getPassword());
         log.info("{}",bindingResult);
@@ -37,7 +37,7 @@ public class LoginController {
         return "redirect:/";
 
     }
-    @GetMapping("/login")
+    @GetMapping("login")
     public String homeLogin(@Login LoginMemberDto loginMember, HttpServletRequest request, Model model) {
         if (loginMember == null) {
             model.addAttribute("form", new LoginForm());
@@ -47,7 +47,7 @@ public class LoginController {
         return "/";
     }
 
-    @PostMapping("/logout")
+    @PostMapping("logout")
     public String logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null) {
