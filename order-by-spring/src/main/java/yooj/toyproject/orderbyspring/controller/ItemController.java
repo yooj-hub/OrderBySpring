@@ -37,22 +37,22 @@ import java.util.stream.Collectors;
 public class ItemController {
     private final ItemService itemService;
 
-    @GetMapping("/item/add")
+    @GetMapping("item/add")
     public String goItemAddHome() {
-        return "/item/itemAddHome";
+        return "item/itemAddHome";
     }
 
-    @GetMapping("/item/add/instrument")
+    @GetMapping("item/add/instrument")
     public String goInstrumentAddForm(Model model) {
         model.addAttribute("form", new InstrumentAddForm());
-        return "/item/instrumentAddForm";
+        return "item/instrumentAddForm";
     }
 
-    @PostMapping("/item/add/instrument")
+    @PostMapping("item/add/instrument")
     public String goInstrumentAdd(Model model, @Validated @ModelAttribute("form") InstrumentAddForm form, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            return "/item/instrumentAddForm";
+            return "item/instrumentAddForm";
         }
         if (form.getPrice() < 0) {
             bindingResult.rejectValue("price", "value error", "0이상의 값을 입력하시오");
@@ -61,13 +61,13 @@ public class ItemController {
             bindingResult.rejectValue("stockQuantity", "value error", "1이상의 값을 입력하시오");
         }
         if (bindingResult.hasErrors()) {
-            return "/item/instrumentAddForm";
+            return "item/instrumentAddForm";
         }
         itemService.save(new Instrument(form.getName(), form.getPrice(), form.getStockQuantity(), form.getBrand(), form.getManufacturingDate()));
-        return "redirect:/";
+        return "redirect:";
     }
 
-    @GetMapping(value = {"/item/instrument/itemList"})
+    @GetMapping(value = {"item/instrument/itemList"})
     public String goInstrumentList(@Login LoginMemberDto loginMember, Model model, @ModelAttribute(name = "itemSearch") ItemSearch itemSearch) {
         String search = itemSearch.getSearch();
         if (search == null) {
@@ -98,15 +98,15 @@ public class ItemController {
         model.addAttribute("itemSearch", itemSearch);
         model.addAttribute("itemList", allInstrumentDto);
         model.addAttribute("form", form);
-        return "/item/instrumentInfo";
+        return "item/instrumentInfo";
     }
 
-    @GetMapping("/item/edit")
+    @GetMapping("item/edit")
     public String goSelectItemKind() {
-        return "/item/itemEditHome";
+        return "item/itemEditHome";
     }
 
-    @GetMapping("/item/edit/instrument")
+    @GetMapping("item/edit/instrument")
     public String goInstrumentEdit(Model model, @ModelAttribute(name = "itemSearch") ItemSearch itemSearch) {
         String search = itemSearch.getSearch();
         if (search == null) {
@@ -136,18 +136,18 @@ public class ItemController {
         model.addAttribute("itemList", allInstrumentDto);
         model.addAttribute("form", form);
 
-        return "/item/instrumentEditInfo";
+        return "item/instrumentEditInfo";
     }
 
-    @GetMapping("/item/edit/instrument/{id}")
+    @GetMapping("item/edit/instrument/{id}")
     public String goEditInstrumentForm(@PathVariable Long id, Model model) {
         Instrument item = (Instrument) itemService.findById(id);
         InstrumentEditForm form = new InstrumentEditForm(item.getId(), item.getName(), item.getPrice(), item.getStockQuantity(), item.getBrand(), item.getManufacturingDate());
         model.addAttribute("form", form);
-        return "/item/instrumentEditForm";
+        return "item/instrumentEditForm";
     }
 
-    @PostMapping("/item/edit/instrument/{id}")
+    @PostMapping("item/edit/instrument/{id}")
     public String itemEdit(@PathVariable Long id, @Validated @ModelAttribute("form") InstrumentEditForm form, BindingResult bindingResult) {
         if (form.getPrice() < 0) {
             bindingResult.rejectValue("price", "value error", "0이상의 값을 입력하시오");
@@ -156,9 +156,9 @@ public class ItemController {
             bindingResult.rejectValue("stockQuantity", "value error", "1이상의 값을 입력하시오");
         }
         if (bindingResult.hasErrors()) {
-            return "/item/instrumentEditForm";
+            return "item/instrumentEditForm";
         }
         itemService.instrumentChange(id, form.getName(), form.getPrice(), form.getStockQuantity(), form.getBrand(), form.getManufacturingDate());
-        return "redirect:/";
+        return "redirect:";
     }
 }

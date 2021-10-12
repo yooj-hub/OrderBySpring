@@ -26,18 +26,18 @@ import javax.servlet.http.HttpSession;
 public class MemberController {
     private final MemberService memberService;
 
-    @GetMapping("/join")
+    @GetMapping("join")
     public String joinForm(Model model) {
         model.addAttribute("form", new MemberJoinForm());
-        return "/member/joinForm";
+        return "member/joinForm";
     }
-    @PostMapping("/join")
+    @PostMapping("join")
     public String join(@Validated @ModelAttribute(name = "form") MemberJoinForm form, BindingResult bindingResult) {
         if (memberService.findByLoginId(form.getLoginId()).isPresent()) {
             bindingResult.reject("duplicate Id", "아이디가 중복되었습니다.");
         }
         if (bindingResult.hasErrors()) {
-            return "/member/joinForm";
+            return "member/joinForm";
         }
         memberService.save(Member.builder()
                 .username(form.getUsername())
@@ -49,24 +49,24 @@ public class MemberController {
                 .password(form.getPassword())
                 .loginId(form.getLoginId())
                 .build());
-        return "redirect:/";
+        return "redirect:";
     }
 
-    @GetMapping("/edit")
+    @GetMapping("edit")
     public String editForm(@Login LoginMemberDto loginMember, Model model) {
 //        log.info("Member's ID {}",loginMember.getId());
         model.addAttribute("form", new MemberEditForm(loginMember));
-        return "/member/editForm";
+        return "member/editForm";
     }
 
-    @PostMapping("/edit")
+    @PostMapping("edit")
     public String edit(@Validated @ModelAttribute(name = "form") MemberEditForm form, BindingResult bindingResult, HttpServletRequest request) {
 //        log.info("Member's ID {}",form.getId());
         if (!memberService.findByIdPassword(form.getId()).equals(form.getCurrentPassword())) {
             bindingResult.rejectValue("currentPassword", "not equal password", "현재 비밀번호가 일치하지 않습니다.");
         }
         if (bindingResult.hasErrors()) {
-            return "/member/editForm";
+            return "member/editForm";
         }
         memberService.changeMember(form.getId(),
                         form.getUsername(),
@@ -77,6 +77,6 @@ public class MemberController {
                 );
         HttpSession session = request.getSession(false);
         session.invalidate();
-        return "redirect:/";
+        return "redirect:";
     }
 }

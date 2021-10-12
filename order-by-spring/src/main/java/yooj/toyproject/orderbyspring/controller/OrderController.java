@@ -33,32 +33,32 @@ public class OrderController {
     private final MemberService memberService;
 
 
-    @GetMapping("/order/orderList")
+    @GetMapping("order/orderList")
     public String orderList(@Login LoginMemberDto loginMember, Model model, HttpServletRequest request) {
         List<OrderListDto> orderList = orderService.findOrderListDto(loginMember.getId());
         model.addAttribute("orderList", orderList);
-        return "/order/orderList";
+        return "order/orderList";
     }
 
-    @GetMapping("/order/info/{orderId}")
+    @GetMapping("order/info/{orderId}")
     public String orderInfo(@PathVariable Long orderId, @Login LoginMemberDto loginMember, Model model, RedirectAttributes redirectAttributes) {
         Order order = orderService.findById(orderId);
         if (!orderService.checkMemberId(orderId, loginMember.getId())) {
             redirectAttributes.addFlashAttribute("authorization", "접근권한이 없습니다.");
-            return "redirect:/order/orderList";
+            return "redirect:order/orderList";
         }
         model.addAttribute("orderId", orderId);
         model.addAttribute("orderItemList", orderItemService.findOrderItemDto(orderId));
         model.addAttribute("status", orderService.findById(orderId).getStatus());
         model.addAttribute("address", order.getAddress());
-        return "/order/orderInfo";
+        return "order/orderInfo";
     }
 
-    @GetMapping("/order/edit/{orderId}")
+    @GetMapping("order/edit/{orderId}")
     public String editOrder(@PathVariable Long orderId, Model model, RedirectAttributes redirectAttributes, @Login LoginMemberDto loginMember) {
         if (!orderService.checkMemberId(orderId, loginMember.getId())) {
             redirectAttributes.addFlashAttribute("authorization", "접근권한이 없습니다.");
-            return "redirect:/order/orderList";
+            return "redirect:order/orderList";
         }
         Order order = orderService.findById(orderId);
         model.addAttribute("orderId", orderId);
@@ -76,10 +76,10 @@ public class OrderController {
         model.addAttribute("status", order.getStatus());
         model.addAttribute("address", order.getAddress());
         model.addAttribute("itemQuantityList",purchasable);
-        return "/order/form/orderEditForm";
+        return "order/form/orderEditForm";
     }
 
-    @PostMapping("/order/edit/{orderId}")
+    @PostMapping("order/edit/{orderId}")
     public String postEditOrder(@PathVariable Long orderId, Model model
             , @Validated @ModelAttribute(name = "orderItemListForm") OrderItemCreationDto orderItemDtos,
                                 BindingResult bindingResult,
@@ -107,15 +107,15 @@ public class OrderController {
                 purchasable.add(Integer.sum(findOrderItemDto.get(i).getQuantity(),itemList.get(i).getStockQuantity()));
             }
             model.addAttribute("itemQuantityList",purchasable);
-            return "/order/form/orderEditForm";
+            return "order/form/orderEditForm";
         }
         orderItemService.orderItemChange(orderId, orderItemList);
         orderService.changeAddress(orderId,address);
-        return "redirect:/order/info/" + orderId;
+        return "redirect:order/info/" + orderId;
     }
     @GetMapping("/order")
     public String goItemSelectList(){
-        return "/item/itemSelectHome";
+        return "item/itemSelectHome";
     }
     @PostMapping("/order")
     public String instrumentOrder(@Login LoginMemberDto loginMember,@ModelAttribute("form")OrderQuantityCreationForm form,
@@ -135,7 +135,7 @@ public class OrderController {
             }
         }
         if(bindingResult.hasErrors() || isError){
-            return "redirect:/item/instrument/itemList";
+            return "redirect:item/instrument/itemList";
         }
         Member member = memberService.findById(loginMember.getId());
         Order savedOrder = orderService.save(new Order(member, OrderStatus.WAITING, address));
