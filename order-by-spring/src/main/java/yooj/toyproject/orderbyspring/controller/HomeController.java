@@ -9,7 +9,7 @@ import yooj.toyproject.orderbyspring.web.argumentresolver.Login;
 @Controller
 //@RestController
 public class HomeController {
-    @GetMapping("/")
+    @GetMapping("")
     public String home(@Login LoginMemberDto loginMember, Model model){
         if(loginMember==null){
             return "home";
