@@ -9,7 +9,7 @@ import yooj.toyproject.orderbyspring.domain.item.Instrument;
 import yooj.toyproject.orderbyspring.domain.item.Item;
 import yooj.toyproject.orderbyspring.domain.item.QItem;
 import yooj.toyproject.orderbyspring.web.dto.OrderItemDto;
-import yooj.toyproject.orderbyspring.web.dto.QOrderItemDto;
+
 
 import javax.persistence.EntityManager;
 import java.util.List;
