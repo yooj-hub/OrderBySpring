@@ -45,7 +45,7 @@ public class OrderController {
         Order order = orderService.findById(orderId);
         if (!orderService.checkMemberId(orderId, loginMember.getId())) {
             redirectAttributes.addFlashAttribute("authorization", "접근권한이 없습니다.");
-            return "redirect:order/orderList";
+            return "redirect:/order/orderList";
         }
         model.addAttribute("orderId", orderId);
         model.addAttribute("orderItemList", orderItemService.findOrderItemDto(orderId));
@@ -58,7 +58,7 @@ public class OrderController {
     public String editOrder(@PathVariable Long orderId, Model model, RedirectAttributes redirectAttributes, @Login LoginMemberDto loginMember) {
         if (!orderService.checkMemberId(orderId, loginMember.getId())) {
             redirectAttributes.addFlashAttribute("authorization", "접근권한이 없습니다.");
-            return "redirect:order/orderList";
+            return "redirect:/order/orderList";
         }
         Order order = orderService.findById(orderId);
         model.addAttribute("orderId", orderId);
@@ -111,7 +111,7 @@ public class OrderController {
         }
         orderItemService.orderItemChange(orderId, orderItemList);
         orderService.changeAddress(orderId,address);
-        return "redirect:order/info/" + orderId;
+        return "redirect:/order/info/" + orderId;
     }
     @GetMapping("/order")
     public String goItemSelectList(){
@@ -135,18 +135,23 @@ public class OrderController {
             }
         }
         if(bindingResult.hasErrors() || isError){
-            return "redirect:item/instrument/itemList";
+            return "redirect:/item/instrument/itemList";
         }
         Member member = memberService.findById(loginMember.getId());
         Order savedOrder = orderService.save(new Order(member, OrderStatus.WAITING, address));
+        int cnt = 0;
         for (OrderPriceAndQuantity orderPriceAndQuantity : orderPriceAndQuantityList) {
             int quantity = orderPriceAndQuantity.getOrderQuantity();
             if(quantity==0){
                 continue;
             }
+            cnt++;
             int price = orderPriceAndQuantity.getPrice();
             Long itemId = orderPriceAndQuantity.getItemId();
             orderItemService.save(orderItemService.makeOrderItem(savedOrder.getId(), price, quantity, itemId));
+        }
+        if(cnt==0){
+            orderService.deleteOrder(savedOrder);
         }
 
         return "redirect:/";

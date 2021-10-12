@@ -64,7 +64,7 @@ public class ItemController {
             return "item/instrumentAddForm";
         }
         itemService.save(new Instrument(form.getName(), form.getPrice(), form.getStockQuantity(), form.getBrand(), form.getManufacturingDate()));
-        return "redirect:";
+        return "redirect:/";
     }
 
     @GetMapping(value = {"item/instrument/itemList"})
@@ -159,6 +159,6 @@ public class ItemController {
             return "item/instrumentEditForm";
         }
         itemService.instrumentChange(id, form.getName(), form.getPrice(), form.getStockQuantity(), form.getBrand(), form.getManufacturingDate());
-        return "redirect:";
+        return "redirect:/";
     }
 }
