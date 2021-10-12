@@ -35,7 +35,6 @@ dependencies {
 
 
     implementation 'com.querydsl:querydsl-jpa'
-	implementation 'com.querydsl:querydsl-apt'
 
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
@@ -70,4 +69,4 @@ configurations {
 compileQuerydsl {
     options.annotationProcessorPath = configurations.querydsl
 }
-compileQuerydsl.doFirst { if(file(querydslDir).exists() ) delete(file(querydslDir)) }
+
