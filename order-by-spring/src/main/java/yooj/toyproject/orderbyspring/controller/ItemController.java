@@ -50,6 +50,10 @@ public class ItemController {
 
     @PostMapping("/item/add/instrument")
     public String goInstrumentAdd(Model model, @Validated @ModelAttribute("form") InstrumentAddForm form, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "/item/instrumentAddForm";
+        }
         if (form.getPrice() < 0) {
             bindingResult.rejectValue("price", "value error", "0이상의 값을 입력하시오");
         }
