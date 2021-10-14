@@ -106,7 +106,7 @@
 <nav><a th:href="@{/}" ><i class="fas fa-home home-button"></i></a></nav>
 <div class="box">
     <div class="form-background">
-        <h1>Order By Spring<br></h1>
+        <h1 style="text-align: center">Order By Spring<br></h1>
         <h1 style="text-align: center;border-bottom: dodgerblue solid;">Order Edit Form</h1>
         <form action="#" th:action="@{/order/edit/{id}(id=${orderId})}" method="post" th:object="${orderItemListForm}">
             <div class="status" th:text="${status}"></div>
