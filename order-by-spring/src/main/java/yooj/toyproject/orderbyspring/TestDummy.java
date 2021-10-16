@@ -7,9 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import yooj.toyproject.orderbyspring.domain.*;
 import yooj.toyproject.orderbyspring.domain.item.Instrument;
 import yooj.toyproject.orderbyspring.domain.item.Item;
-import yooj.toyproject.orderbyspring.repository.ItemRepository;
-import yooj.toyproject.orderbyspring.repository.MemberRepository;
-import yooj.toyproject.orderbyspring.repository.OrderItemRepository;
 import yooj.toyproject.orderbyspring.service.ItemService;
 import yooj.toyproject.orderbyspring.service.MemberService;
 import yooj.toyproject.orderbyspring.service.OrderItemService;
@@ -18,7 +15,6 @@ import yooj.toyproject.orderbyspring.service.OrderService;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Component
 @RequiredArgsConstructor
@@ -66,6 +62,8 @@ public class TestDummy {
         orderItemService.save(orderItemService.makeOrderItem(savedOrder5.getId(), savedItem2.getPrice(), 10, savedItem2.getId()));
         orderItemService.save(orderItemService.makeOrderItem(savedOrder5.getId(), savedItem.getPrice(),5,savedItem.getId()));
         orderItemService.cancelAll(savedOrder2.getId());
+        Member adminMember = new Member("testAdmin","testAdmin","test!",address,RoleType.ADMIN);
+        memberService.save(adminMember);
 
     }
 

@@ -36,19 +36,17 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
                 .map(o-> new OrderListQueryDto(o.getId(),o.getMember().getUsername(),o.getStatus(),o.getAddress(),o.getCreatedDate()))
                 .collect(toList());
 
-//        queryFactory.select(
-//                new QOrderListQueryDto(
-//                        order.id,
-//                        member.username,
-//                        order.status,
-//                        order.address
-//                )
-//        )
-//                .from(order)
-//                .innerJoin(order.member,member)
-////                .fetchJoin()
-//                .where(order.member.id.eq(memberId))
-//                .fetch();
+    }
+    @Override
+    public List<OrderListQueryDto> findAllOrderListQueryDtoByMemberId() {
+        return queryFactory.
+                selectFrom(order)
+                .innerJoin(order.member, member)
+                .fetchJoin()
+                .fetch()
+                .stream()
+                .map(o-> new OrderListQueryDto(o.getId(),o.getMember().getUsername(),o.getStatus(),o.getAddress(),o.getCreatedDate()))
+                .collect(toList());
 
     }
 

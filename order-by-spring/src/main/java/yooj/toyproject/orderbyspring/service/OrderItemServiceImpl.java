@@ -78,6 +78,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     public void orderItemChange(Long orderId, List<OrderItemDto> orderItemDtoList) {
         List<OrderItem> orderItem = orderItemRepository.findByOrderIdWithItem(orderId);
         int size = orderItem.size();
+        boolean isCancel = true;
         for (int i = 0; i < size; i++) {
             if (orderItem.get(i).getQuantity() == orderItemDtoList.get(i).getQuantity()) {
                 continue;
@@ -88,9 +89,11 @@ public class OrderItemServiceImpl implements OrderItemService {
             }
             Item item = orderItem.get(i).getItem();
             item.swapQuantity(item.getStockQuantity() + orderItem.get(i).getQuantity() - orderItemDtoList.get(i).getQuantity());
-            ;
             orderItem.get(i).changeOrderQuantity(orderItemDtoList.get(i).getQuantity());
-
+            isCancel=false;
+        }
+        if(isCancel){
+            orderRepository.getById(orderId).changeOrderStatus(OrderStatus.CANCEL);
         }
 
     }

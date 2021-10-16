@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Login Home</title>
+    <title>Admin Home</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
           integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -102,7 +102,6 @@
 </style>
 <body>
 
-</nav>
 <nav><a th:href="@{/}" ><i class="fas fa-home home-button"></i></a></nav>
 <div class="box">
     <div class="form-background">
@@ -119,28 +118,9 @@
                     </a>
                 </div>
                 <div class="menu">
-                    <a th:href="@{/order}">
+                    <a th:href="@{/order/status}">
                         <div><div class="menu-name">
-                            주문 하기</div>
-                        </div>
-                    </a>
-                </div>
-                <div class="menu">
-                    <a th:href="@{/order/orderList}">
-                        <div class="menu-name">주문 확인하기</div>
-                    </a>
-                </div>
-                <div class="menu">
-                    <a th:href="@{/item/add}">
-                        <div><div class="menu-name">
-                            상품 등록</div>
-                        </div>
-                    </a>
-                </div>
-                <div class="menu">
-                    <a th:href="@{/item/edit}">
-                        <div><div class="menu-name">
-                            상품 수정</div>
+                            주문 상태 변경</div>
                         </div>
                     </a>
                 </div>

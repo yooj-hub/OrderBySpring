@@ -21,6 +21,7 @@ import yooj.toyproject.orderbyspring.web.login.LoginMemberDto;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -43,7 +44,7 @@ public class OrderController {
     @GetMapping("order/info/{orderId}")
     public String orderInfo(@PathVariable Long orderId, @Login LoginMemberDto loginMember, Model model, RedirectAttributes redirectAttributes) {
         Order order = orderService.findById(orderId);
-        if (!orderService.checkMemberId(orderId, loginMember.getId())) {
+        if (!orderService.checkMemberId(orderId, loginMember.getId()) && loginMember.getRoleType() == RoleType.NORMAL) {
             redirectAttributes.addFlashAttribute("authorization", "접근권한이 없습니다.");
             return "redirect:/order/orderList";
         }
@@ -56,7 +57,7 @@ public class OrderController {
 
     @GetMapping("order/edit/{orderId}")
     public String editOrder(@PathVariable Long orderId, Model model, RedirectAttributes redirectAttributes, @Login LoginMemberDto loginMember) {
-        if (!orderService.checkMemberId(orderId, loginMember.getId())) {
+        if (!orderService.checkMemberId(orderId, loginMember.getId()) && loginMember.getRoleType() == RoleType.NORMAL) {
             redirectAttributes.addFlashAttribute("authorization", "접근권한이 없습니다.");
             return "redirect:/order/orderList";
         }
@@ -66,16 +67,16 @@ public class OrderController {
         List<Item> itemList = itemService.findByOrderId(orderId);
         List<OrderItemDto> findOrderItemDto = orderItemService.findOrderItemDto(orderId);
 
-        List<Integer> purchasable=new ArrayList<>();
-        for(int i=0;i<itemList.size();i++){
-            purchasable.add(Integer.sum(findOrderItemDto.get(i).getQuantity(),itemList.get(i).getStockQuantity()));
+        List<Integer> purchasable = new ArrayList<>();
+        for (int i = 0; i < itemList.size(); i++) {
+            purchasable.add(Integer.sum(findOrderItemDto.get(i).getQuantity(), itemList.get(i).getStockQuantity()));
         }
         findOrderItemDto
                 .forEach(orderItemDto::addOrderItemDto);
         model.addAttribute("orderItemListForm", orderItemDto);
         model.addAttribute("status", order.getStatus());
         model.addAttribute("address", order.getAddress());
-        model.addAttribute("itemQuantityList",purchasable);
+        model.addAttribute("itemQuantityList", purchasable);
         return "order/form/orderEditForm";
     }
 
@@ -84,8 +85,8 @@ public class OrderController {
             , @Validated @ModelAttribute(name = "orderItemListForm") OrderItemCreationDto orderItemDtos,
                                 BindingResult bindingResult,
                                 RedirectAttributes redirectAttributes,
-                                @ModelAttribute("address")Address address
-                                ) {
+                                @ModelAttribute("address") Address address
+    ) {
         List<OrderItem> preOrderItemList = orderItemService.findByOrderIdWithItem(orderId);
         List<OrderItemDto> orderItemList = orderItemDtos.getOrderItemForm();
 //        for (OrderItemDto orderItemDto : orderItemList) {
@@ -102,39 +103,42 @@ public class OrderController {
         if (bindingResult.hasErrors()) {
             List<Item> itemList = itemService.findByOrderId(orderId);
             List<OrderItemDto> findOrderItemDto = orderItemService.findOrderItemDto(orderId);
-            List<Integer> purchasable=new ArrayList<>();
-            for(int i=0;i<itemList.size();i++){
-                purchasable.add(Integer.sum(findOrderItemDto.get(i).getQuantity(),itemList.get(i).getStockQuantity()));
+            List<Integer> purchasable = new ArrayList<>();
+            for (int i = 0; i < itemList.size(); i++) {
+                purchasable.add(Integer.sum(findOrderItemDto.get(i).getQuantity(), itemList.get(i).getStockQuantity()));
             }
-            model.addAttribute("itemQuantityList",purchasable);
+            model.addAttribute("itemQuantityList", purchasable);
             return "order/form/orderEditForm";
         }
+
         orderItemService.orderItemChange(orderId, orderItemList);
-        orderService.changeAddress(orderId,address);
+        orderService.changeAddress(orderId, address);
         return "redirect:/order/info/" + orderId;
     }
+
     @GetMapping("/order")
-    public String goItemSelectList(){
+    public String goItemSelectList() {
         return "item/itemSelectHome";
     }
+
     @PostMapping("/order")
-    public String instrumentOrder(@Login LoginMemberDto loginMember,@ModelAttribute("form")OrderQuantityCreationForm form,
+    public String instrumentOrder(@Login LoginMemberDto loginMember, @ModelAttribute("form") OrderQuantityCreationForm form,
                                   BindingResult bindingResult,
                                   Model model,
                                   @ModelAttribute("itemSearch") ItemSearch itemSearch,
                                   RedirectAttributes redirectAttributes,
-                                  @ModelAttribute("address") Address address){
+                                  @ModelAttribute("address") Address address) {
         List<OrderPriceAndQuantity> orderPriceAndQuantityList = form.getOrderPriceAndQuantityList();
-        boolean isError=false;
-        for(int i=0;i<orderPriceAndQuantityList.size();i++){
+        boolean isError = false;
+        for (int i = 0; i < orderPriceAndQuantityList.size(); i++) {
             Long itemId = orderPriceAndQuantityList.get(i).getItemId();
             Item item = itemService.findById(itemId);
-            if(item.getStockQuantity()<orderPriceAndQuantityList.get(i).getOrderQuantity()){
-                redirectAttributes.addFlashAttribute("quantityError","수량이 부족합니다.");
-                isError=true;
+            if (item.getStockQuantity() < orderPriceAndQuantityList.get(i).getOrderQuantity()) {
+                redirectAttributes.addFlashAttribute("quantityError", "수량이 부족합니다.");
+                isError = true;
             }
         }
-        if(bindingResult.hasErrors() || isError){
+        if (bindingResult.hasErrors() || isError) {
             return "redirect:/item/instrument/itemList";
         }
         Member member = memberService.findById(loginMember.getId());
@@ -142,7 +146,7 @@ public class OrderController {
         int cnt = 0;
         for (OrderPriceAndQuantity orderPriceAndQuantity : orderPriceAndQuantityList) {
             int quantity = orderPriceAndQuantity.getOrderQuantity();
-            if(quantity==0){
+            if (quantity == 0) {
                 continue;
             }
             cnt++;
@@ -150,12 +154,55 @@ public class OrderController {
             Long itemId = orderPriceAndQuantity.getItemId();
             orderItemService.save(orderItemService.makeOrderItem(savedOrder.getId(), price, quantity, itemId));
         }
-        if(cnt==0){
+        if (cnt == 0) {
             orderService.deleteOrder(savedOrder);
+        }
+        return "redirect:/";
+    }
+
+    @GetMapping("order/status")
+    public String orderStatus(@Login LoginMemberDto loginMemberDto, Model model) {
+        if (loginMemberDto.getRoleType() != RoleType.ADMIN) {
+            log.info("잘못된 orderStatus 접근 발생");
+            return "redirect:/";
+        }
+        List<OrderListDto> orderList = orderService.findAllOrderListDto();
+        OrderStatusCreationDto form = new OrderStatusCreationDto();
+        orderList
+                .forEach(o -> form.addOrderStatusDto(new OrderStatusDto(o.getOrderId(), o.getStatus())));
+        model.addAttribute("form", form);
+        model.addAttribute("orderList", orderList);
+        OrderStatus cancel = OrderStatus.CANCEL;
+        OrderStatus waiting = OrderStatus.WAITING;
+        OrderStatus accepted = OrderStatus.ACCEPTED;
+        OrderStatus completed = OrderStatus.COMPLETED;
+        OrderStatus ongoing = OrderStatus.ONGOING;
+        model.addAttribute("cancel", cancel);
+        model.addAttribute("waiting", waiting);
+        model.addAttribute("accepted", accepted);
+        model.addAttribute("completed", completed);
+        model.addAttribute("ongoing", ongoing);
+        return "order/orderStatusList";
+    }
+
+    @PostMapping("order/status")
+    public String postOrderStatus(@Login LoginMemberDto loginMemberDto, @ModelAttribute("form") OrderStatusCreationDto form) {
+        if (loginMemberDto.getRoleType() != RoleType.ADMIN) {
+            log.info("잘못된 orderStatus 접근 발생");
+            return "redirect:/";
+        }
+        List<OrderListDto> allOrderListDto = orderService.findAllOrderListDto();
+        List<OrderStatusDto> orderStatusForm = form.getOrderStatusForm();
+        for (int i = 0; i < orderStatusForm.size(); i++) {
+            if (allOrderListDto.get(i).getStatus() != orderStatusForm.get(i).getStatus()) {
+                orderService.changeStatus(orderService.findById(orderStatusForm.get(i).getOrderId()),orderStatusForm.get(i).getStatus());
+                if (orderStatusForm.get(i).getStatus()==OrderStatus.CANCEL){
+                    orderItemService.cancelAll(orderStatusForm.get(i).getOrderId());
+                }
+            }
         }
 
         return "redirect:/";
-
     }
 
 

@@ -6,12 +6,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yooj.toyproject.orderbyspring.domain.Address;
 import yooj.toyproject.orderbyspring.domain.Order;
+import yooj.toyproject.orderbyspring.domain.OrderStatus;
 import yooj.toyproject.orderbyspring.domain.item.Item;
 import yooj.toyproject.orderbyspring.repository.OrderRepository;
 import yooj.toyproject.orderbyspring.web.dto.OrderListDto;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.*;
 
@@ -75,6 +77,20 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<OrderListDto> findAllOrderListDto() {
+        return orderRepository
+                .findAllOrderListQueryDtoByMemberId()
+                .stream()
+                .map(q -> new OrderListDto(q.getOrderId(),
+                        q.getUsername(),
+                        q.getStatus(),
+                        q.getAddress(),
+                        findOrderPrice(q.getOrderId()),
+                        q.getOrderDate()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public boolean checkMemberId(Long orderId, Long memberId) {
         Long memberIdByOrderId = orderRepository.findMemberIdByOrderId(orderId);
         return memberIdByOrderId != null && Objects.equals(memberIdByOrderId, memberId);
@@ -90,6 +106,11 @@ public class OrderServiceImpl implements OrderService {
                 .changeAddress(address);
     }
 
+    @Override
+    @Transactional
+    public void changeStatus(Order order, OrderStatus orderStatus) {
+        order.changeOrderStatus(orderStatus);
+    }
 
 
 }

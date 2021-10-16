@@ -10,10 +10,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class OrderItemCreationDto {
-    private List<OrderItemDto> orderItemForm= new ArrayList<>();
-    public void addOrderItemDto(OrderItemDto orderItemDto){
-        orderItemForm.add(orderItemDto);
+public class OrderStatusCreationDto {
+    private List<OrderStatusDto> orderStatusForm = new ArrayList<>();
+    public void addOrderStatusDto(OrderStatusDto orderStatusDto){
+        this.orderStatusForm.add(orderStatusDto);
     }
 
 }

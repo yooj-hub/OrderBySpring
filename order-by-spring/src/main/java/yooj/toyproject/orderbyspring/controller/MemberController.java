@@ -52,14 +52,14 @@ public class MemberController {
         return "redirect:";
     }
 
-    @GetMapping("edit")
+    @GetMapping("member")
     public String editForm(@Login LoginMemberDto loginMember, Model model) {
 //        log.info("Member's ID {}",loginMember.getId());
         model.addAttribute("form", new MemberEditForm(loginMember));
         return "member/editForm";
     }
 
-    @PostMapping("edit")
+    @PostMapping("member")
     public String edit(@Validated @ModelAttribute(name = "form") MemberEditForm form, BindingResult bindingResult, HttpServletRequest request) {
 //        log.info("Member's ID {}",form.getId());
         if (!memberService.findByIdPassword(form.getId()).equals(form.getCurrentPassword())) {

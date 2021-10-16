@@ -23,6 +23,8 @@ public class Member extends BaseEntity{
     private String password;
     @Embedded
     private Address address;
+    @Enumerated(EnumType.STRING)
+    private RoleType roleType;
 
     @Builder
     public Member(String username, String loginId, String password, Address address) {
@@ -30,6 +32,15 @@ public class Member extends BaseEntity{
         this.loginId = loginId;
         this.password = password;
         this.address = address;
+        this.roleType = RoleType.NORMAL;
+    }
+    @Builder
+    public Member(String username, String loginId, String password, Address address, RoleType roleType) {
+        this.username = username;
+        this.loginId = loginId;
+        this.password = password;
+        this.address = address;
+        this.roleType = roleType;
     }
 
     public void changeMember(String username, String password, String city, String street, String zipcode) {
