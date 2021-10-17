@@ -1,4 +1,4 @@
-# Toy Project 주문 시스템(Order By Spring)
+# Toy Project 주문 시스템 (Order By Spring)
 
 
 
@@ -6,7 +6,7 @@
 
 
 
-- 프로젝트 명 Order By Spring
+- 그동안 공부했던 기술들을 Test 한다.
 
 - 주문 시스템을 구현하는 것을 목표로 한다. ( 상품의 경우 배송이 가능한 상품으로 제작 )
 - Spring에서 Entity가 아닌 Dto 로 반환하여 필요한 엔티티 구조가 넘어가지 않게 한다.
@@ -19,22 +19,29 @@
 
 
 
-## 사용 기술 스택( 추가 가능 )
+## 사용 기술 스택
 
 
 
-- Front
-  - Html/ Css / javascript / vue.js ...
+- Backend
+  - java 8, Spring Data Jpa, Jpa, QueryDsl, Spring MVC
+  
+    
 
+- Frontend
 
+  - Html/ Css / javascript / Thymeleaf
 
-- Back
-  - java 8, Spring Data Jpa, Jpa, QueryDsl(09/17 추가), Spring MVC...
-
-
+  
 
 - Database
   - Mysql8.0
+  
+    
+  
+- Others
+
+  - AWS - EC2 / RDS
 
 
 
@@ -46,7 +53,9 @@
 
 
 
-## Order By Spring 의 기능
+
+
+## Order By Spring 의 구현된 기능 및 History
 
 
 
@@ -91,20 +100,54 @@
 
   
 
-- admin page view 구현, admin page내 로그인 관련 기능 구현
+- user page view 구현, user page내 로그인 관련 기능 구현 (10/8)
 
   - 로그인 관련 기능
     - 로그인
+    
     - 회원 가입
+    
     - 회원 정보 수정
+    
     - 로그 아웃
+    
+      
+  
+- Order List View & 주문 수정 기능 구현 (10/10)
+
+  
+
+- 주문 및 아이템 View 구현(10/11)
+
+  - 아이템 등록
+  - 아이템 수정
+  - 아이템 리스트 / 리스트 탐색
+  - 주문
+  - UI 개선
+
+  
+
+- AWS 배포(10/13)
+
+  - EC2 / RDS 를 통한 배포
+
+  
+
+- Admin Page 구현(10/16)
+
+  - 주문 상태 변경 가능(admin 만 가능
+  - member객체에 RoleType 추가
+
+  
+
+  
 
 
 
 
 
 
-## Entity Graph
+## 전체 Entity Graph
 
 ![EntityGraph](./EntityGraph.png)
 
