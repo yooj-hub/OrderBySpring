@@ -1,4 +1,4 @@
-# Toy Project 주문 시스템 (Order By Spring)
+# Toy Project 주문 시스템 (Order By Spring) 2021. 09. 15 ~ 10.17)
 
 
 
@@ -7,9 +7,9 @@
 
 
 - 그동안 공부했던 기술들을 Test 한다.
-
 - 주문 시스템을 구현하는 것을 목표로 한다. ( 상품의 경우 배송이 가능한 상품으로 제작 )
 - Spring에서 Entity가 아닌 Dto 로 반환하여 필요한 엔티티 구조가 넘어가지 않게 한다.
+- login은 session을 통하여 구현
 
 
 
@@ -38,7 +38,12 @@
   - Mysql8.0
   
     
-  
+
+- Tools
+  - Inteillj
+
+
+
 - Others
 
   - AWS - EC2 / RDS
@@ -55,7 +60,70 @@
 
 
 
-## Order By Spring 의 구현된 기능 및 History
+## 전체 Entity Graph
+
+![EntityGraph](./EntityGraph.png)
+
+
+
+---
+
+
+
+
+
+
+
+## DB Table
+
+
+
+![DB Table](./DBTable.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 구현된 기능
+
+
+
+- Member Service
+  - 회원 가입, 회원 정보 수정의 기능이 가능하다. 내부적인 시스템으로 CRUD가 전부 가능하다.
+  - admin 계정을 통하여 주문 관리 기능
+- Order Service
+  - 기본적인 CRUD 기능과 pk, 이름 검색을 지원한다.
+  - member Id를 통한 Order List 조회 및 view
+  - 주문 생성 기능
+- Order Item Service
+  - 기본적인 CRUD기능 및 order Id를 통한 조회
+  - 주문 취소시 Item의 수량 변경
+  -  order자체가 삭제 될 경우 처리
+- Login Service
+  - Spring session 및 을 통하여 구현
+- Item Service
+  - 아이템에 관련한 CRUD 기능
+  - 아이템 조회 및 아이템 탐색
+
+
+
+
+
+---
+
+
+
+## Order By Spring의 History
 
 
 
@@ -141,23 +209,6 @@
   
 
   
-
-
-
-
-
-
-## 전체 Entity Graph
-
-![EntityGraph](./EntityGraph.png)
-
-
-
-## DB Table
-
-
-
-![DB Table](./DBTable.png)
 
 
 
