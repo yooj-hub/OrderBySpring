@@ -86,14 +86,6 @@
 
 
 
-
-
-
-
-
-
-
-
 ## 구현된 기능
 
 
@@ -116,6 +108,12 @@
   - 아이템 조회 및 아이템 탐색
 
 
+
+http://ec2-3-37-125-229.ap-northeast-2.compute.amazonaws.com:8080/ 접속하여 이용 가능
+
+Test 계정 Id: test password: test!
+
+TestAdmin Id: testAdmin password: test!
 
 
 
@@ -208,7 +206,33 @@
 
   
 
-  
+  ---
+
+## posting
+
+### 기능 구현
+
+​	https://yoojsblog.tistory.com/173?category=960752
+
+​	https://yoojsblog.tistory.com/174?category=960752
+
+​	https://yoojsblog.tistory.com/175?category=960752
+
+​	https://yoojsblog.tistory.com/179?category=960752
+
+​	https://yoojsblog.tistory.com/196?category=960752
+
+​	https://yoojsblog.tistory.com/198?category=960752
+
+​	https://yoojsblog.tistory.com/199?category=960752
+
+​	https://yoojsblog.tistory.com/200?category=960752
+
+
+
+### 회고
+
+​	https://yoojsblog.tistory.com/201?category=960752
 
 
 
